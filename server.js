@@ -2,8 +2,13 @@ const express = require('express');
 
 // Setup an Express server
 const app = express();
+app.use(express.static('dist'));
 app.use(express.static('public'));
-const server = app.listen(process.env.PORT || 3000);
+
+// Listen on port
+const port = process.env.PORT || 3000;
+const server = app.listen(port);
+console.log(`Server listening on port ${port}`);
 
 // Setup socket.io
 const io = require('socket.io')(server);

@@ -1,4 +1,4 @@
-# From https://github.com/github/gitignore/blob/master/Node.gitignore
+# Based on https://github.com/github/gitignore/blob/master/Node.gitignore
 
 # Logs
 logs
@@ -83,3 +83,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Added by me
+.DS_Store
+dist/

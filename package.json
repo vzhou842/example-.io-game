@@ -4,12 +4,18 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "webpack --mode development --watch",
     "start": "node server.js"
   },
   "author": "Victor Zhou",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   }
 }
