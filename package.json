@@ -4,7 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "webpack --mode development --watch",
     "start": "node server.js"
   },
   "author": "Victor Zhou",
@@ -16,6 +15,7 @@
   },
   "devDependencies": {
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-middleware": "^3.6.2"
   }
 }
