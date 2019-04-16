@@ -1,1 +1,3 @@
-module.exports = Object.freeze({});
+module.exports = Object.freeze({
+  PLAYER_RADIUS: 20,
+});
