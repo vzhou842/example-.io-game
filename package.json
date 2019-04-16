@@ -2,9 +2,9 @@
   "name": "io-game-from-scratch",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/server/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/server/server.js"
   },
   "author": "Victor Zhou",
   "license": "MIT",

@@ -7,7 +7,7 @@ const app = express();
 app.use(express.static('public'));
 
 // Setup Webpack for development
-const config = require('./webpack.dev.config.js');
+const config = require('../../webpack.dev.config.js');
 const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler));
 
