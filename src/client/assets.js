@@ -4,10 +4,6 @@ const ASSET_NAMES = [
 
 const assets = {};
 
-export function downloadAssets() {
-  return Promise.all(ASSET_NAMES.map(downloadAsset));
-}
-
 function downloadAsset(assetName) {
   return new Promise(resolve => {
     const asset = new Image();
@@ -18,6 +14,10 @@ function downloadAsset(assetName) {
     };
     asset.src = `/assets/${assetName}`;
   });
+}
+
+export function downloadAssets() {
+  return Promise.all(ASSET_NAMES.map(downloadAsset));
 }
 
 export const getAsset = assetName => assets[assetName];

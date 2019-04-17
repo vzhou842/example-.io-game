@@ -19,10 +19,10 @@ class Game {
   }
 
   update() {
-    for (const playerID in this.sockets) {
+    Object.keys(this.sockets).forEach(playerID => {
       const socket = this.sockets[playerID];
       socket.emit(Constants.MSG_TYPES.GAME_UPDATE, {});
-    }
+    });
   }
 }
 

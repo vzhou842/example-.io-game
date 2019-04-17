@@ -1,5 +1,6 @@
-const Constants = require('../shared/constants');
 import { downloadAssets, getAsset } from './assets';
+
+const Constants = require('../shared/constants');
 
 // Setup the canvas and get the graphics context
 const canvas = document.getElementById('game-canvas');
@@ -22,7 +23,7 @@ function renderShip(x, y) {
   context.drawImage(getAsset('ship.svg'), x - r, y - r, r * 2, r * 2);
 }
 
-export function startRendering() {
+export default function startRendering() {
   return downloadAssets().then(() => {
     // Render at 60 FPS
     console.log('Downloaded all assets.');

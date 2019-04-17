@@ -1,17 +1,18 @@
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
+const socketio = require('socket.io');
 
-const Constants = require('../shared/Constants');
+const Constants = require('../shared/constants');
 const Game = require('./game');
+const webpackConfig = require('../../webpack.dev.config.js');
 
 // Setup an Express server
 const app = express();
 app.use(express.static('public'));
 
 // Setup Webpack for development
-const config = require('../../webpack.dev.config.js');
-const compiler = webpack(config);
+const compiler = webpack(webpackConfig);
 app.use(webpackDevMiddleware(compiler));
 
 // Listen on port
@@ -20,7 +21,7 @@ const server = app.listen(port);
 console.log(`Server listening on port ${port}`);
 
 // Setup socket.io
-const io = require('socket.io')(server);
+const io = socketio(server);
 
 // Listen for socket.io connections
 io.on('connection', socket => {

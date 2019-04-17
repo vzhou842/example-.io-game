@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+
 const Constants = require('../shared/constants');
 
 const socket = io(`ws://${window.location.host}`);
@@ -11,10 +12,10 @@ const connectedPromise = new Promise(resolve => {
 
 export const connect = () => connectedPromise;
 
-export function play() {
-  socket.emit(Constants.MSG_TYPES.JOIN_GAME, 'Anonymous');
+export function play(username) {
+  socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);
 }
 
-socket.on(Constants.MSG_TYPES.GAME_UPDATE, data => {
+socket.on(Constants.MSG_TYPES.GAME_UPDATE, () => {
 
 });

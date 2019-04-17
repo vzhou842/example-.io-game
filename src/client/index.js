@@ -1,5 +1,5 @@
 import { connect, play } from './networking';
-import { startRendering } from './render';
+import startRendering from './render';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/main.css';
@@ -14,7 +14,7 @@ Promise.all([
 ]).then(() => {
   playMenu.classList.remove('hidden');
   playButton.onclick = () => {
-    play();
+    play(usernameInput.value);
     playMenu.classList.add('hidden');
   };
 }).catch(console.error);
