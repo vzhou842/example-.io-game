@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { processGameUpdate } from './state';
 
 const Constants = require('../shared/constants');
 
@@ -16,6 +17,4 @@ export function play(username) {
   socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);
 }
 
-socket.on(Constants.MSG_TYPES.GAME_UPDATE, () => {
-
-});
+socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
