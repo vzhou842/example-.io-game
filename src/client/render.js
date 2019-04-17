@@ -1,4 +1,5 @@
 const Constants = require('../shared/constants');
+import { downloadAssets, getAsset } from './assets';
 
 // Setup the canvas and get the graphics context
 const canvas = document.getElementById('game-canvas');
@@ -12,18 +13,19 @@ function render() {
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   // Draw the player in the center of our screen
-  renderCircle(canvas.width / 2, canvas.height / 2, Constants.PLAYER_RADIUS, 'blue');
+  renderShip(canvas.width / 2, canvas.height / 2);
 }
 
-// Renders an circle with the given attributes
-function renderCircle(x, y, r, color) {
-  context.beginPath();
-  context.arc(x, y, r, 0, 2 * Math.PI);
-  context.fillStyle = color;
-  context.fill();
+// Renders a ship at the given coordinates
+function renderShip(x, y) {
+  const r = Constants.PLAYER_RADIUS;
+  context.drawImage(getAsset('ship.svg'), x - r, y - r, r * 2, r * 2);
 }
 
 export function startRendering() {
-  // Render at 60 FPS
-  setInterval(render, 1000 / 60);
+  return downloadAssets().then(() => {
+    // Render at 60 FPS
+    console.log('Downloaded all assets.');
+    setInterval(render, 1000 / 60);
+  });
 }
