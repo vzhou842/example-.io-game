@@ -1,10 +1,11 @@
+const Constants = require('../shared/constants');
 const Player = require('./player');
 
 class Game {
   constructor() {
     this.sockets = {};
     this.players = {};
-    setInterval(this.update, 1000 / 60);
+    setInterval(this.update.bind(this), 1000 / 60);
   }
 
   addPlayer(socket, username) {
@@ -18,8 +19,9 @@ class Game {
   }
 
   update() {
-    for (const playerID in this.players) {
-      const player = players[playerID];
+    for (const playerID in this.sockets) {
+      const socket = this.sockets[playerID];
+      socket.emit(Constants.MSG_TYPES.GAME_UPDATE, {});
     }
   }
 }
