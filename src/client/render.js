@@ -1,9 +1,9 @@
 import { downloadAssets, getAsset } from './assets';
-import { getMe, getOtherPlayers } from './state';
+import { getMe, getOtherPlayers, getBullets } from './state';
 
 const Constants = require('../shared/constants');
 
-const { PLAYER_RADIUS, MAP_SIZE } = Constants;
+const { PLAYER_RADIUS, BULLET_RADIUS, MAP_SIZE } = Constants;
 
 // Setup the canvas and get the graphics context
 const canvas = document.getElementById('game-canvas');
@@ -38,6 +38,9 @@ function render() {
   // Draw all players
   renderPlayer(me, me);
   getOtherPlayers().forEach(renderPlayer.bind(null, me));
+
+  // Draw all bullets
+  getBullets().forEach(renderBullet.bind(null, me));
 }
 
 // Renders a ship at the given coordinates
@@ -54,6 +57,17 @@ function renderPlayer(me, player) {
     PLAYER_RADIUS * 2,
   );
   context.restore();
+}
+
+function renderBullet(me, bullet) {
+  const { x, y } = bullet;
+  context.drawImage(
+    getAsset('bullet.svg'),
+    canvas.width / 2 + x - me.x - BULLET_RADIUS,
+    canvas.height / 2 + y - me.y - BULLET_RADIUS,
+    BULLET_RADIUS * 2,
+    BULLET_RADIUS * 2,
+  );
 }
 
 export default function startRendering() {
