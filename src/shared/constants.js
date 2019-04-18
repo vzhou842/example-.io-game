@@ -6,6 +6,7 @@ module.exports = Object.freeze({
 
   BULLET_RADIUS: 3,
   BULLET_SPEED: 800,
+  BULLET_DAMAGE: 10,
 
   MAP_SIZE: 4000,
   MSG_TYPES: {
