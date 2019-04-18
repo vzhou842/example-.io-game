@@ -44,12 +44,12 @@ function render() {
 function renderPlayer(me, player) {
   const { x, y, direction } = player;
   context.save();
-  context.translate(canvas.width / 2, canvas.height / 2);
+  context.translate(canvas.width / 2 + x - me.x, canvas.height / 2 + y - me.y);
   context.rotate(direction);
   context.drawImage(
     getAsset('ship.svg'),
-    x - PLAYER_RADIUS - me.x,
-    y - PLAYER_RADIUS - me.y,
+    -PLAYER_RADIUS,
+    -PLAYER_RADIUS,
     PLAYER_RADIUS * 2,
     PLAYER_RADIUS * 2,
   );
