@@ -1,9 +1,11 @@
+const shortid = require('shortid');
 const ObjectClass = require('./object');
 const Constants = require('../shared/constants');
 
 class Bullet extends ObjectClass {
   constructor(parentID, x, y, dir) {
     super(x, y, dir, Constants.BULLET_SPEED);
+    this.id = shortid();
     this.parentID = parentID;
   }
 
@@ -15,6 +17,7 @@ class Bullet extends ObjectClass {
 
   serializeForUpdate() {
     return {
+      id: this.id,
       x: this.x,
       y: this.y,
     };

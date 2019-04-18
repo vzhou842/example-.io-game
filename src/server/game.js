@@ -50,7 +50,6 @@ class Game {
 
     // Update each player
     Object.keys(this.sockets).forEach(playerID => {
-      const socket = this.sockets[playerID];
       const player = this.players[playerID];
       const newBullet = player.update(dt);
       if (newBullet) {
@@ -94,6 +93,7 @@ class Game {
     ));
 
     return {
+      t: Date.now(),
       me: player.serializeForUpdate(),
       others: nearbyPlayers.map(p => p.serializeForUpdate()),
       bullets: nearbyBullets.map(b => b.serializeForUpdate()),

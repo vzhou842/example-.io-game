@@ -11,7 +11,7 @@ class Player extends ObjectClass {
     this.fireCooldown = 0;
   }
 
-  // Returns a newly created bullet, or nothing.
+  // Returns a newly created bullet, or null.
   update(dt) {
     super.update(dt);
 
@@ -25,6 +25,8 @@ class Player extends ObjectClass {
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
       return new Bullet(this.id, this.x, this.y, this.direction);
     }
+
+    return null;
   }
 
   takeBulletDamage() {
@@ -34,6 +36,7 @@ class Player extends ObjectClass {
   serializeForUpdate() {
     return {
       ...(super.serializeForUpdate()),
+      id: this.id,
       hp: this.hp,
     };
   }

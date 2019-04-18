@@ -1,5 +1,5 @@
 import { getAsset } from './assets';
-import { getMe, getOtherPlayers, getBullets } from './state';
+import { getCurrentState } from './state';
 
 const Constants = require('../shared/constants');
 
@@ -12,7 +12,10 @@ canvas.height = window.innerHeight;
 const context = canvas.getContext('2d');
 
 function render() {
-  const me = getMe();
+  const { me, others, bullets } = getCurrentState();
+  if (!me) {
+    return;
+  }
 
   // Draw background
   const backgroundX = MAP_SIZE / 2 - me.x + canvas.width / 2;
@@ -37,10 +40,10 @@ function render() {
 
   // Draw all players
   renderPlayer(me, me);
-  getOtherPlayers().forEach(renderPlayer.bind(null, me));
+  others.forEach(renderPlayer.bind(null, me));
 
   // Draw all bullets
-  getBullets().forEach(renderBullet.bind(null, me));
+  bullets.forEach(renderBullet.bind(null, me));
 }
 
 // Renders a ship at the given coordinates
