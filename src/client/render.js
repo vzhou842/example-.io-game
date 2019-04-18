@@ -20,7 +20,7 @@ function render() {
   const backgroundGradient = context.createRadialGradient(
     backgroundX,
     backgroundY,
-    100,
+    MAP_SIZE / 10,
     backgroundX,
     backgroundY,
     MAP_SIZE / 2,
@@ -29,6 +29,11 @@ function render() {
   backgroundGradient.addColorStop(1, 'gray');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Draw boundaries
+  context.strokeStyle = 'black';
+  context.lineWidth = 1;
+  context.strokeRect(backgroundX - MAP_SIZE / 2, backgroundY - MAP_SIZE / 2, MAP_SIZE, MAP_SIZE);
 
   // Draw all players
   renderPlayer(me, me);

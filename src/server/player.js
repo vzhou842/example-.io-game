@@ -12,6 +12,10 @@ class Player {
   update(dt) {
     this.x += dt * Constants.PLAYER_SPEED * Math.sin(this.direction);
     this.y -= dt * Constants.PLAYER_SPEED * Math.cos(this.direction);
+
+    // Make sure the player stays in bounds
+    this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
+    this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
   }
 
   setDirection(dir) {
