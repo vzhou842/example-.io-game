@@ -62,6 +62,16 @@ class Game {
     const destroyedBullets = applyCollisions(Object.values(this.players), this.bullets);
     this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
 
+    // Check if any players are dead
+    Object.keys(this.sockets).forEach(playerID => {
+      const socket = this.sockets[playerID];
+      const player = this.players[playerID];
+      if (player.hp <= 0) {
+        socket.emit(Constants.MSG_TYPES.GAME_OVER);
+        this.removePlayer(socket);
+      }
+    });
+
     // Send a game update to each player every other time
     if (this.shouldSendUpdate) {
       Object.keys(this.sockets).forEach(playerID => {

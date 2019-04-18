@@ -1,6 +1,7 @@
 import { connect, play } from './networking';
-import startRendering from './render';
-import { startCapturingInput } from './input';
+import { startRendering, stopRendering } from './render';
+import { startCapturingInput, stopCapturingInput } from './input';
+import { downloadAssets } from './assets';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/main.css';
@@ -10,8 +11,8 @@ const playButton = document.getElementById('play-button');
 const usernameInput = document.getElementById('username-input');
 
 Promise.all([
-  connect(),
-  startRendering(),
+  connect(onGameOver),
+  downloadAssets(),
 ]).then(() => {
   playMenu.classList.remove('hidden');
   playButton.onclick = () => {
@@ -19,5 +20,13 @@ Promise.all([
     play(usernameInput.value);
     playMenu.classList.add('hidden');
     startCapturingInput();
+    startRendering();
   };
 }).catch(console.error);
+
+function onGameOver() {
+  alert('You died!');
+  stopCapturingInput();
+  stopRendering();
+  playMenu.classList.remove('hidden');
+}

@@ -1,4 +1,4 @@
-import { downloadAssets, getAsset } from './assets';
+import { getAsset } from './assets';
 import { getMe, getOtherPlayers, getBullets } from './state';
 
 const Constants = require('../shared/constants');
@@ -90,10 +90,15 @@ function renderBullet(me, bullet) {
   );
 }
 
-export default function startRendering() {
-  return downloadAssets().then(() => {
-    // Render at 60 FPS
-    console.log('Downloaded all assets.');
-    setInterval(render, 1000 / 60);
-  });
+let renderInterval = null;
+
+export function startRendering() {
+  // Render at 60 FPS
+  renderInterval = setInterval(render, 1000 / 60);
+}
+
+export function stopRendering() {
+  clearInterval(renderInterval);
+  context.fillStyle = 'black';
+  context.fillRect(0, 0, canvas.width, canvas.height);
 }

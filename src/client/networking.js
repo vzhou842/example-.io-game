@@ -12,7 +12,13 @@ const connectedPromise = new Promise(resolve => {
   });
 });
 
-export const connect = () => connectedPromise;
+export const connect = onGameOver => {
+  return connectedPromise.then(() => {
+    // Register callbacks
+    socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
+    socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
+  });
+};
 
 export function play(username) {
   socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);
@@ -21,5 +27,3 @@ export function play(username) {
 export const updateDirection = throttle(20, dir => {
   socket.emit(Constants.MSG_TYPES.INPUT, dir);
 });
-
-socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);

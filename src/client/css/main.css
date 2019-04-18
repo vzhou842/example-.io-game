@@ -3,10 +3,7 @@ html, body {
   padding: 0;
   overflow: hidden;
   overscroll-behavior: none;
-}
-
-.hidden {
-  display: none;
+  background-color: black;
 }
 
 #play-menu {
@@ -16,4 +13,11 @@ html, body {
   transform: translateY(-50%) translateX(-50%);
   padding: 10px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hidden {
+  display: none !important;
 }

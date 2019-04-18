@@ -8,3 +8,7 @@ function onMouseMove(e) {
 export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseMove);
 }
+
+export function stopCapturingInput() {
+  window.removeEventListener('mousemove', onMouseMove);
+}
