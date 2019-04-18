@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { throttle } from 'throttle-debounce';
 import { processGameUpdate } from './state';
 
 const Constants = require('../shared/constants');
@@ -16,5 +17,9 @@ export const connect = () => connectedPromise;
 export function play(username) {
   socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);
 }
+
+export const updateDirection = throttle(20, dir => {
+  socket.emit(Constants.MSG_TYPES.INPUT, dir);
+});
 
 socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);

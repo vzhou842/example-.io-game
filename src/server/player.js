@@ -14,6 +14,10 @@ class Player {
     this.y -= dt * Constants.PLAYER_SPEED * Math.cos(this.direction);
   }
 
+  setDirection(dir) {
+    this.direction = dir;
+  }
+
   distanceTo(object) {
     const dx = this.x - object.x;
     const dy = this.y - object.y;
