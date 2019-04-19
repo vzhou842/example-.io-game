@@ -6,6 +6,10 @@ html, body {
   background-color: black;
 }
 
+hr {
+  width: 100%;
+}
+
 .hidden {
   display: none !important;
 }
@@ -21,9 +25,15 @@ html, body {
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
+  text-align: center;
+}
+
+#play-menu p {
+  margin-bottom: 0;
 }
 
 #play-menu input {
+  font-size: 18px;
   outline: none;
   border: none;
   border-bottom: 1px solid black;
@@ -48,7 +58,7 @@ html, body {
 }
 
 #play-menu button:hover {
-  background-color: lightgray;
+  background-color: rgb(230, 230, 230);
 }
 
 #leaderboard {
