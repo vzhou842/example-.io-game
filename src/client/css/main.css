@@ -15,11 +15,40 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  padding: 10px;
+  padding: 20px 30px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 5px;
+}
+
+#play-menu input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+  margin-bottom: 5px;
+  padding: 3px;
+  text-align: center;
+}
+
+#play-menu input:hover {
+  outline: none;
+}
+
+#play-menu button {
+  font-size: 18px;
+  outline: none;
+  border: none;
+  color: black;
+  background-color: transparent;
+  padding: 5px 20px;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+#play-menu button:hover {
+  background-color: lightgray;
 }
 
 #leaderboard {
@@ -33,6 +62,7 @@ html, body {
 
 #leaderboard th {
   text-align: center;
+  padding: 2px 5px;
 }
 
 #leaderboard td {

@@ -17,6 +17,7 @@ Promise.all([
   downloadAssets(),
 ]).then(() => {
   playMenu.classList.remove('hidden');
+  usernameInput.focus();
   playButton.onclick = () => {
     // Play!
     play(usernameInput.value);
