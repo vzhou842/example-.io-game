@@ -1,3 +1,4 @@
+import { debounce } from 'throttle-debounce';
 import { getAsset } from './assets';
 import { getCurrentState } from './state';
 
@@ -10,6 +11,11 @@ const canvas = document.getElementById('game-canvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 const context = canvas.getContext('2d');
+
+window.addEventListener('resize', debounce(40, () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}));
 
 function render() {
   const { me, others, bullets } = getCurrentState();
