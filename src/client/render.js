@@ -44,12 +44,12 @@ function render() {
   context.lineWidth = 1;
   context.strokeRect(backgroundX - MAP_SIZE / 2, backgroundY - MAP_SIZE / 2, MAP_SIZE, MAP_SIZE);
 
+  // Draw all bullets
+  bullets.forEach(renderBullet.bind(null, me));
+
   // Draw all players
   renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
-
-  // Draw all bullets
-  bullets.forEach(renderBullet.bind(null, me));
 }
 
 // Renders a ship at the given coordinates
