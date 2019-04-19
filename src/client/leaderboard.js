@@ -1,4 +1,4 @@
-import { escape } from 'underscore';
+import escape from 'lodash/escape';
 
 const leaderboard = document.getElementById('leaderboard');
 const rows = document.querySelectorAll('#leaderboard table tr');
