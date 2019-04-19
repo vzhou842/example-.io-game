@@ -5,15 +5,19 @@ const socketio = require('socket.io');
 
 const Constants = require('../shared/constants');
 const Game = require('./game');
-const webpackConfig = require('../../webpack.dev.config.js');
+const webpackConfig = require('../../webpack.dev.js');
 
 // Setup an Express server
 const app = express();
 app.use(express.static('public'));
 
 // Setup Webpack for development
-const compiler = webpack(webpackConfig);
-app.use(webpackDevMiddleware(compiler));
+if (process.env.NODE_ENV === 'development') {
+  const compiler = webpack(webpackConfig);
+  app.use(webpackDevMiddleware(compiler));
+} else {
+  app.use(express.static('dist'));
+}
 
 // Listen on port
 const port = process.env.PORT || 3000;
