@@ -17,6 +17,9 @@ export const connect = onGameOver => (
     // Register callbacks
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
+    socket.on('disconnect', () => {
+      alert('Disconnected from the server.');
+    });
   })
 );
 
