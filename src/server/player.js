@@ -9,11 +9,15 @@ class Player extends ObjectClass {
     this.username = username;
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireCooldown = 0;
+    this.score = 0;
   }
 
   // Returns a newly created bullet, or null.
   update(dt) {
     super.update(dt);
+
+    // Update score
+    this.score += dt * Constants.SCORE_PER_SECOND;
 
     // Make sure the player stays in bounds
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
@@ -31,6 +35,10 @@ class Player extends ObjectClass {
 
   takeBulletDamage() {
     this.hp -= Constants.BULLET_DAMAGE;
+  }
+
+  onDealtDamage() {
+    this.score += Constants.SCORE_BULLET_HIT;
   }
 
   serializeForUpdate() {

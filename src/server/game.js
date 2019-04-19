@@ -57,8 +57,13 @@ class Game {
       }
     });
 
-    // Apply collisions
+    // Apply collisions, give players score for hitting bullets
     const destroyedBullets = applyCollisions(Object.values(this.players), this.bullets);
+    destroyedBullets.forEach(b => {
+      if (this.players[b.parentID]) {
+        this.players[b.parentID].onDealtDamage();
+      }
+    });
     this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
 
     // Check if any players are dead
@@ -73,10 +78,11 @@ class Game {
 
     // Send a game update to each player every other time
     if (this.shouldSendUpdate) {
+      const leaderboard = this.getLeaderboard();
       Object.keys(this.sockets).forEach(playerID => {
         const socket = this.sockets[playerID];
         const player = this.players[playerID];
-        socket.emit(Constants.MSG_TYPES.GAME_UPDATE, this.createUpdate(player));
+        socket.emit(Constants.MSG_TYPES.GAME_UPDATE, this.createUpdate(player, leaderboard));
       });
       this.shouldSendUpdate = false;
     } else {
@@ -84,19 +90,25 @@ class Game {
     }
   }
 
-  createUpdate(player) {
-    const nearbyPlayers = Object.values(this.players).filter(p => (
-      p !== player && p.distanceTo(player) <= Constants.MAP_SIZE / 2
-    ));
-    const nearbyBullets = this.bullets.filter(b => (
-      b.distanceTo(player) <= Constants.MAP_SIZE / 2
-    ));
+  getLeaderboard() {
+    const sortedPlayers = Object.values(this.players).sort((p1, p2) => p2.score - p1.score);
+    return sortedPlayers
+      .slice(0, 5)
+      .map(p => ({ username: p.username, score: Math.round(p.score) }));
+  }
+
+  createUpdate(player, leaderboard) {
+    const nearbyPlayers = Object.values(this.players).filter(
+      p => p !== player && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
+    );
+    const nearbyBullets = this.bullets.filter(b => b.distanceTo(player) <= Constants.MAP_SIZE / 2);
 
     return {
       t: Date.now(),
       me: player.serializeForUpdate(),
       others: nearbyPlayers.map(p => p.serializeForUpdate()),
       bullets: nearbyBullets.map(b => b.serializeForUpdate()),
+      leaderboard,
     };
   }
 }
