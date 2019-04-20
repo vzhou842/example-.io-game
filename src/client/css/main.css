@@ -108,3 +108,35 @@ button:focus {
   border-radius: 5px;
   text-align: center;
 }
+
+@media screen and (max-width: 640px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  #play-menu {
+    padding: 10px 15px;
+    min-width: 280px;
+  }
+
+  #disconnect-modal > div {
+    padding: 10px;
+    min-width: 280px;
+  }
+
+  #leaderboard th {
+    padding: 0 3px;
+  }
+
+  #leaderboard td {
+    padding: 0 3px;
+  }
+
+  #leaderboard table {
+    font-size: 14px;
+  }
+}
