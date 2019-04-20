@@ -6,16 +6,20 @@ const Constants = require('../shared/constants');
 
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
 
-// Setup the canvas and get the graphics context
+// Get the canvas graphics context
 const canvas = document.getElementById('game-canvas');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 const context = canvas.getContext('2d');
+setCanvasDimensions();
 
-window.addEventListener('resize', debounce(40, () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}));
+function setCanvasDimensions() {
+  // On small screens (e.g. phones), we want to "zoom out" so players can still see at least
+  // 800 in-game units of width.
+  const scaleRatio = Math.max(1, 800 / window.innerWidth);
+  canvas.width = scaleRatio * window.innerWidth;
+  canvas.height = scaleRatio * window.innerHeight;
+}
+
+window.addEventListener('resize', debounce(40, setCanvasDimensions));
 
 function render() {
   const { me, others, bullets } = getCurrentState();
