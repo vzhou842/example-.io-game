@@ -8,8 +8,6 @@ function onMouseInput(e) {
 export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseInput);
   window.addEventListener('click', onMouseInput);
-
-
 }
 
 export function stopCapturingInput() {
