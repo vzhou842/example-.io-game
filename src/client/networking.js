@@ -4,7 +4,7 @@ import { processGameUpdate } from './state';
 
 const Constants = require('../shared/constants');
 
-const socket = io(`ws://${window.location.host}`);
+const socket = io(`ws://${window.location.host}`, { reconnection: false });
 const connectedPromise = new Promise(resolve => {
   socket.on('connect', () => {
     console.log('Connected to server!');
@@ -18,7 +18,11 @@ export const connect = onGameOver => (
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on('disconnect', () => {
-      alert('Disconnected from the server.'); // eslint-disable-line no-alert
+      console.log('Disconnected from server.');
+      document.getElementById('disconnect-modal').classList.remove('hidden');
+      document.getElementById('reconnect-button').onclick = () => {
+        window.location.reload();
+      };
     });
   })
 );
