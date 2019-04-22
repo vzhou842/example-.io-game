@@ -7,8 +7,8 @@
 </h4>
 
 <p align="center">
-  <a href="https://travis-ci.com/vzhou842/multiplayer-web-game-example">
-    <img src="https://travis-ci.com/vzhou842/multiplayer-web-game-example.svg?branch=master" alt="Build Status"></img>
+  <a href="https://travis-ci.com/vzhou842/example-.io-game">
+    <img src="https://travis-ci.com/vzhou842/example-.io-game.svg?branch=master" alt="Build Status"></img>
   </a>
 </p>
 
