@@ -56,10 +56,8 @@ export function getCurrentState() {
 
   // If base is the most recent update we have, use its state.
   // Otherwise, interpolate between its state and the state of (base + 1).
-  if (base < 0) {
-    return gameUpdates[0];
-  } else if (base === gameUpdates.length - 1) {
-    return gameUpdates[base];
+  if (base < 0 || base === gameUpdates.length - 1) {
+    return gameUpdates[gameUpdates.length - 1];
   } else {
     const baseUpdate = gameUpdates[base];
     const next = gameUpdates[base + 1];
