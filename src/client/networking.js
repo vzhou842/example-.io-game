@@ -21,6 +21,12 @@ export const connect = (onGameOver: Function) => (
     // Register callbacks
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
+    socket.on(Constants.MSG_TYPES.GAME_FULL, () => {
+      document.getElementById('game-full-modal').classList.remove('hidden');
+      document.getElementById('retry-button').onclick = () => {
+        window.location.reload();
+      };
+    });
     socket.on('disconnect', () => {
       console.log('Disconnected from server.');
       (document.getElementById('disconnect-modal'): any).classList.remove('hidden');

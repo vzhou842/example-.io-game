@@ -4,6 +4,8 @@ const Player = require('./player');
 const Bullet = require('./bullet');
 const applyCollisions = require('./collisions');
 
+const MAX_GAME_SIZE = 24;
+
 class Game {
   sockets: { [string]: Object };
   players: { [string]: Player };
@@ -20,13 +22,20 @@ class Game {
     setInterval(this.update.bind(this), 1000 / 60);
   }
 
+  // Returns true on success, false on failure.
   addPlayer(socket: Object, username: string) {
+    if (Object.keys(this.sockets).length >= MAX_GAME_SIZE) {
+      return false;
+    }
+
     this.sockets[socket.id] = socket;
 
     // Generate a position to start this player at.
     const x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     const y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     this.players[socket.id] = new Player(socket.id, username, x, y);
+
+    return true;
   }
 
   removePlayer(socket: Object) {

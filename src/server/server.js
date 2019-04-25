@@ -42,7 +42,10 @@ io.on('connection', socket => {
 const game = new Game();
 
 function joinGame(username) {
-  game.addPlayer(this, username);
+  if (!game.addPlayer(this, username)) {
+    // Game is full!
+    this.emit(Constants.MSG_TYPES.GAME_FULL);
+  }
 }
 
 function handleInput(dir) {
