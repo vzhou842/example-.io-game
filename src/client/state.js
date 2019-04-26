@@ -1,3 +1,5 @@
+// Learn more about this file at:
+// https://victorzhou.com/blog/build-an-io-game-part-1/#7-client-state
 import { updateLeaderboard } from './leaderboard';
 
 // The "current" state will always be RENDER_DELAY ms behind server time.

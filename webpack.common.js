@@ -1,3 +1,5 @@
+// Learn more about this file at:
+// https://victorzhou.com/blog/build-an-io-game-part-1/#2-builds--project-setup
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
