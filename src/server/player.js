@@ -9,6 +9,7 @@ class Player extends ObjectClass {
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireCooldown = 0;
     this.score = 0;
+    this.radius = Constants.PLAYER_INITIAL_RADIUS;
   }
 
   // Returns a newly created bullet, or null.
@@ -45,6 +46,7 @@ class Player extends ObjectClass {
       ...(super.serializeForUpdate()),
       direction: this.direction,
       hp: this.hp,
+      radius: this.radius
     };
   }
 }

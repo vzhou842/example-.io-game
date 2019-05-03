@@ -6,7 +6,7 @@ import { getCurrentState } from './state';
 
 const Constants = require('../shared/constants');
 
-const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
+const { PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
 
 // Get the canvas graphics context
 const canvas = document.getElementById('game-canvas');
@@ -64,7 +64,7 @@ function renderBackground(x, y) {
 
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
-  const { x, y, direction } = player;
+  const { x, y, direction, radius } = player;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
@@ -74,26 +74,26 @@ function renderPlayer(me, player) {
   context.rotate(direction);
   context.drawImage(
     getAsset('ship.svg'),
-    -PLAYER_RADIUS,
-    -PLAYER_RADIUS,
-    PLAYER_RADIUS * 2,
-    PLAYER_RADIUS * 2,
+    -radius,
+    -radius,
+    radius * 2,
+    radius * 2,
   );
   context.restore();
 
   // Draw health bar
   context.fillStyle = 'white';
   context.fillRect(
-    canvasX - PLAYER_RADIUS,
-    canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2,
+    canvasX - radius,
+    canvasY + radius + 8,
+    radius * 2,
     2,
   );
   context.fillStyle = 'red';
   context.fillRect(
-    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP,
-    canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
+    canvasX - radius + radius * 2 * player.hp / PLAYER_MAX_HP,
+    canvasY + radius + 8,
+    radius * 2 * (1 - player.hp / PLAYER_MAX_HP),
     2,
   );
 }
