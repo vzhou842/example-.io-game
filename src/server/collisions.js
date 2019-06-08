@@ -1,7 +1,11 @@
+// @flow
 const Constants = require('../shared/constants');
 
+import type Player from './player';
+import type Bullet from './bullet';
+
 // Returns an array of bullets to be destroyed.
-function applyCollisions(players, bullets) {
+function applyCollisions(players: Array<Player>, bullets: Array<Bullet>): Array<Bullet> {
   const destroyedBullets = [];
   for (let i = 0; i < bullets.length; i++) {
     // Look for a player (who didn't create the bullet) to collide each bullet with.
