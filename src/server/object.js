@@ -1,5 +1,12 @@
-class Object {
-  constructor(id, x, y, dir, speed) {
+// @flow
+class ObjectClass {
+  id: string;
+  x: number;
+  y: number;
+  direction: number;
+  speed: number;
+
+  constructor(id: string, x: number, y: number, dir: number, speed: number) {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -7,18 +14,18 @@ class Object {
     this.speed = speed;
   }
 
-  update(dt) {
+  update(dt: number) {
     this.x += dt * this.speed * Math.sin(this.direction);
     this.y -= dt * this.speed * Math.cos(this.direction);
   }
 
-  distanceTo(object) {
+  distanceTo(object: ObjectClass) {
     const dx = this.x - object.x;
     const dy = this.y - object.y;
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  setDirection(dir) {
+  setDirection(dir: number) {
     this.direction = dir;
   }
 
@@ -31,4 +38,4 @@ class Object {
   }
 }
 
-module.exports = Object;
+module.exports = ObjectClass;
