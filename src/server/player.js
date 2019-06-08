@@ -1,9 +1,15 @@
+// @flow
 const ObjectClass = require('./object');
 const Bullet = require('./bullet');
 const Constants = require('../shared/constants');
 
 class Player extends ObjectClass {
-  constructor(id, username, x, y) {
+  username: string;
+  hp: number;
+  fireCooldown: number;
+  score: number;
+
+  constructor(id: string, username: string, x: number, y: number) {
     super(id, x, y, Math.random() * 2 * Math.PI, Constants.PLAYER_SPEED);
     this.username = username;
     this.hp = Constants.PLAYER_MAX_HP;
@@ -12,7 +18,7 @@ class Player extends ObjectClass {
   }
 
   // Returns a newly created bullet, or null.
-  update(dt) {
+  update(dt: number): ?bool | ?Bullet {
     super.update(dt);
 
     // Update score

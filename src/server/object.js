@@ -1,4 +1,6 @@
 // @flow
+import type Bullet from './bullet';
+
 class ObjectClass {
   id: string;
   x: number;
@@ -14,7 +16,7 @@ class ObjectClass {
     this.speed = speed;
   }
 
-  update(dt: number): ?bool {
+  update(dt: number): ?bool | ?Bullet {
     this.x += dt * this.speed * Math.sin(this.direction);
     this.y -= dt * this.speed * Math.cos(this.direction);
   }
