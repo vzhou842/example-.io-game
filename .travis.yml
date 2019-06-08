@@ -3,6 +3,7 @@ node_js:
   - '10'
 script:
   - npm install
+  - npm run flow
   - npm run lint
 cache:
   directories:
