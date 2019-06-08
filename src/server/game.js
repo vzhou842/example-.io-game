@@ -1,8 +1,17 @@
+// @flow
 const Constants = require('../shared/constants');
 const Player = require('./player');
 const applyCollisions = require('./collisions');
 
+import Bullet from './bullet';
+
 class Game {
+  sockets: { [string]: Object };
+  players: { [string]: Player };
+  bullets: Array<Bullet>;
+  lastUpdateTime: number;
+  shouldSendUpdate: bool;
+
   constructor() {
     this.sockets = {};
     this.players = {};
@@ -12,7 +21,7 @@ class Game {
     setInterval(this.update.bind(this), 1000 / 60);
   }
 
-  addPlayer(socket, username) {
+  addPlayer(socket: Object, username: string) {
     this.sockets[socket.id] = socket;
 
     // Generate a position to start this player at.
@@ -21,12 +30,12 @@ class Game {
     this.players[socket.id] = new Player(socket.id, username, x, y);
   }
 
-  removePlayer(socket) {
+  removePlayer(socket: Object) {
     delete this.sockets[socket.id];
     delete this.players[socket.id];
   }
 
-  handleInput(socket, dir) {
+  handleInput(socket: Object, dir: number) {
     if (this.players[socket.id]) {
       this.players[socket.id].setDirection(dir);
     }
@@ -52,7 +61,7 @@ class Game {
     Object.keys(this.sockets).forEach(playerID => {
       const player = this.players[playerID];
       const newBullet = player.update(dt);
-      if (newBullet) {
+      if (newBullet instanceof Bullet) {
         this.bullets.push(newBullet);
       }
     });
@@ -91,14 +100,14 @@ class Game {
   }
 
   getLeaderboard() {
-    return Object.values(this.players)
-      .sort((p1, p2) => p2.score - p1.score)
+    return (Object.values(this.players): any)
+      .sort((p1: Player, p2: Player) => p2.score - p1.score)
       .slice(0, 5)
-      .map(p => ({ username: p.username, score: Math.round(p.score) }));
+      .map((p: Player) => ({ username: p.username, score: Math.round(p.score) }));
   }
 
-  createUpdate(player, leaderboard) {
-    const nearbyPlayers = Object.values(this.players).filter(
+  createUpdate(player: Player, leaderboard: Object) {
+    const nearbyPlayers = (Object.values(this.players): any).filter(
       p => p !== player && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
     );
     const nearbyBullets = this.bullets.filter(
@@ -109,7 +118,7 @@ class Game {
       t: Date.now(),
       me: player.serializeForUpdate(),
       others: nearbyPlayers.map(p => p.serializeForUpdate()),
-      bullets: nearbyBullets.map(b => b.serializeForUpdate()),
+      bullets: (nearbyBullets.map(b => b.serializeForUpdate()): Array<Object>),
       leaderboard,
     };
   }
