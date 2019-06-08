@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="An Example .io Game" title="An Example .io Game" src="https://github.com/vzhou842/example-.io-game/blob/master/public/assets/icon.svg" width="140"> <br />
+    <img alt="An Example .io Game" title="An Example .io Game" src="https://github.com/vzhou842/example-.io-game/blob/flow/public/assets/icon.svg" width="140"> <br />
     An Example .io Game
 </h1>
 <h4 align="center">
@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://travis-ci.com/vzhou842/example-.io-game">
-    <img src="https://travis-ci.com/vzhou842/example-.io-game.svg?branch=master" alt="Build Status"></img>
+    <img src="https://travis-ci.com/vzhou842/example-.io-game.svg?branch=flow" alt="Build Status"></img>
   </a>
 </p>
 
@@ -16,7 +16,11 @@ An example multiplayer (.io) web game. Read the walkthrough: [**How to Build a M
 
 Built with [Node.js](https://nodejs.org/), [socket.io](https://socket.io/), and [HTML5 Canvas](https://www.w3schools.com/html/html5_canvas.asp).
 
+<<<<<<< HEAD
 To see this code with [Flow](https://flow.org/) typing, visit the [flow branch](https://github.com/vzhou842/example-.io-game/tree/flow).
+=======
+This branch integrates the [Flow](https://flow.org/) static type checker.
+>>>>>>> Update README.md
 
 ## Development
 
