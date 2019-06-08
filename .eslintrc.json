@@ -12,6 +12,7 @@
   ],
   "rules": {
     "arrow-parens": ["error", "as-needed"],
+    "lines-between-class-members": "off",
     "no-console": "off",
     "no-else-return": "off",
     "no-plusplus": "off",

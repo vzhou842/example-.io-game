@@ -1,9 +1,9 @@
 // @flow
+import Bullet from './bullet';
+
 const Constants = require('../shared/constants');
 const Player = require('./player');
 const applyCollisions = require('./collisions');
-
-import Bullet from './bullet';
 
 class Game {
   sockets: { [string]: Object };

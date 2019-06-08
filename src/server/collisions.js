@@ -1,8 +1,8 @@
 // @flow
-const Constants = require('../shared/constants');
-
 import type Player from './player';
 import type Bullet from './bullet';
+
+const Constants = require('../shared/constants');
 
 // Returns an array of bullets to be destroyed.
 function applyCollisions(players: Array<Player>, bullets: Array<Bullet>): Array<Bullet> {
