@@ -5,10 +5,11 @@
   "main": "src/server/server.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
+    "build:node": "babel src/ -d lib/",
     "lint": "eslint --cache --ext .js,.jsx src/",
-    "develop": "cross-env NODE_ENV=development node src/server/server.js",
-    "flow": "flow",
-    "start": "cross-env NODE_ENV=production node src/server/server.js"
+    "develop": "cross-env NODE_ENV=development babel-node src/server/server.js",
+    "flow": "flow src/",
+    "start": "cross-env NODE_ENV=production node lib/server/server.js"
   },
   "author": "Victor Zhou",
   "license": "MIT",
@@ -25,8 +26,11 @@
     "webpack-dev-middleware": "^3.7.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.7.4",
+    "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.7.4",
+    "@babel/preset-flow": "^7.0.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "cross-env": "^5.2.1",
