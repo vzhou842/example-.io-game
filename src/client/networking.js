@@ -22,8 +22,8 @@ export const connect = (onGameOver: Function) => (
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on(Constants.MSG_TYPES.GAME_FULL, () => {
-      document.getElementById('game-full-modal').classList.remove('hidden');
-      document.getElementById('retry-button').onclick = () => {
+      (document.getElementById('game-full-modal'): any).classList.remove('hidden');
+      (document.getElementById('retry-button'): any).onclick = () => {
         window.location.reload();
       };
     });
