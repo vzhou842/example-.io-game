@@ -1,3 +1,4 @@
+// @flow
 const ASSET_NAMES = [
   'ship.svg',
   'bullet.svg',
@@ -21,4 +22,4 @@ function downloadAsset(assetName) {
 
 export const downloadAssets = () => downloadPromise;
 
-export const getAsset = assetName => assets[assetName];
+export const getAsset = (assetName: string) => assets[assetName];

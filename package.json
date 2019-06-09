@@ -7,6 +7,7 @@
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint --cache --ext .js,.jsx src/",
     "develop": "cross-env NODE_ENV=development node src/server/server.js",
+    "flow": "flow",
     "start": "cross-env NODE_ENV=production node src/server/server.js"
   },
   "author": "Victor Zhou",
@@ -33,6 +34,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.2",
+    "flow-bin": "^0.100.0",
     "mini-css-extract-plugin": "^0.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "webpack-cli": "^3.3.10",
