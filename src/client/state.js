@@ -1,3 +1,4 @@
+// @flow
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#7-client-state
 import { updateLeaderboard } from './leaderboard';
@@ -15,7 +16,7 @@ export function initState() {
   firstServerTimestamp = 0;
 }
 
-export function processGameUpdate(update) {
+export function processGameUpdate(update: Object) {
   if (!firstServerTimestamp) {
     firstServerTimestamp = update.t;
     gameStart = Date.now();
@@ -48,7 +49,7 @@ function getBaseUpdate() {
 }
 
 // Returns { me, others, bullets }
-export function getCurrentState() {
+export function getCurrentState(): Object {
   if (!firstServerTimestamp) {
     return {};
   }
