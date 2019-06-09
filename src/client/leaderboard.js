@@ -1,9 +1,10 @@
+// @flow
 import escape from 'lodash/escape';
 
-const leaderboard = document.getElementById('leaderboard');
+const leaderboard = (document.getElementById('leaderboard'): any);
 const rows = document.querySelectorAll('#leaderboard table tr');
 
-export function updateLeaderboard(data) {
+export function updateLeaderboard(data: Object) {
   // This is a bit of a hacky way to do this and can get dangerous if you don't escape usernames
   // properly. You would probably use something like React instead if this were a bigger project.
   for (let i = 0; i < data.length; i++) {
@@ -16,7 +17,7 @@ export function updateLeaderboard(data) {
   }
 }
 
-export function setLeaderboardHidden(hidden) {
+export function setLeaderboardHidden(hidden: bool) {
   if (hidden) {
     leaderboard.classList.add('hidden');
   } else {
