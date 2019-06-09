@@ -1,3 +1,4 @@
+// @flow
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#3-client-entrypoints
 import { connect, play } from './networking';
@@ -13,9 +14,9 @@ import { setLeaderboardHidden } from './leaderboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/main.css';
 
-const playMenu = document.getElementById('play-menu');
-const playButton = document.getElementById('play-button');
-const usernameInput = document.getElementById('username-input');
+const playMenu = (document.getElementById('play-menu'): any);
+const playButton = (document.getElementById('play-button'): any);
+const usernameInput = (document.getElementById('username-input'): any);
 
 Promise.all([
   connect(onGameOver),
