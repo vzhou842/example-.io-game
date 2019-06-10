@@ -1,8 +1,7 @@
 // @flow
-import Bullet from './bullet';
-
 const Constants = require('../shared/constants');
 const Player = require('./player');
+const Bullet = require('./bullet');
 const applyCollisions = require('./collisions');
 
 class Game {
