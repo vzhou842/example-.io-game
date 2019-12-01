@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="8" width="8" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="0 0 8.0000001 8.0000001">
+ <defs id="defs4">
+  <filter id="filter4147" style="color-interpolation-filters:sRGB" height="1.288" width="1.288" y="-.144" x="-.144">
+   <feGaussianBlur id="feGaussianBlur4149" stdDeviation="0.36"/>
+  </filter>
+ </defs>
+ <g id="layer1" transform="translate(0 -1044.4)" fill="#fff">
+  <circle id="path4138" cx="4" cy="1048.4" r="2.1168"/>
+  <path id="circle4142" style="color-rendering:auto;text-decoration-color:#000000;color:#000000;isolation:auto;mix-blend-mode:normal;shape-rendering:auto;solid-color:#000000;block-progression:tb;text-decoration-line:none;text-decoration-style:solid;image-rendering:auto;white-space:normal;text-indent:0;text-transform:none" d="m4 1045.4c-1.645 0-3 1.355-3 3s1.355 3 3 3 3-1.355 3-3-1.355-3-3-3zm0 2c0.56413 0 1 0.4359 1 1 0 0.5642-0.43587 1-1 1s-1-0.4358-1-1c0-0.5641 0.43587-1 1-1z" transform="matrix(1.0584 0 0 1.0584 -.23360 -61.224)" filter="url(#filter4147)"/>
+ </g>
+</svg>

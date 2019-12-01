@@ -1,0 +1,42 @@
+{
+  "name": "io-game-from-scratch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server/server.js",
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "lint": "eslint --cache --ext .js,.jsx src/",
+    "develop": "cross-env NODE_ENV=development node src/server/server.js",
+    "start": "cross-env NODE_ENV=production node src/server/server.js"
+  },
+  "author": "Victor Zhou",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^3.2.0",
+    "lodash": "^4.17.15",
+    "nodemon": "^2.0.1",
+    "shortid": "^2.2.15",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
+    "throttle-debounce": "^2.1.0",
+    "webpack": "^4.41.2",
+    "webpack-dev-middleware": "^3.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "cross-env": "^5.2.1",
+    "css-loader": "^2.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "mini-css-extract-plugin": "^0.6.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^4.2.2"
+  }
+}
