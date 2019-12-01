@@ -15,7 +15,7 @@
     "bootstrap": "^4.3.1",
     "express": "^4.16.4",
     "html-webpack-plugin": "^3.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "shortid": "^2.2.14",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
