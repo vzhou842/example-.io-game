@@ -11,8 +11,8 @@ describe('applyCollisions', () => {
       new Player('2', 'guest2', 2000, 2000),
     ];
     const bullets = [
-      new Bullet('3', 1000 - distanceFromPlayer, 40, 0),
-      new Bullet('3', 1000 + distanceFromPlayer, 40, 0),
+      new Bullet('2', 1000 - distanceFromPlayer, 40, 0),
+      new Bullet('2', 1000 + distanceFromPlayer, 40, 0),
     ];
 
     const result = applyCollisions(players, bullets);
@@ -28,7 +28,7 @@ describe('applyCollisions', () => {
     expect(result).toHaveLength(0);
   });
 
-  it('should destroy a bullet that collides with a player', () => {
+  it('should apply damage when bullet collides with player', () => {
     const player = new Player('1', 'guest', 40, 40);
     const bullet = new Bullet('2', 40, 40 + Constants.BULLET_RADIUS + Constants.PLAYER_RADIUS, 0);
 
