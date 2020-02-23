@@ -1,14 +1,13 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base", "plugin:jest/recommended"],
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
-  "plugins": [
-    "import"
-  ],
+  "plugins": ["import", "jest"],
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "no-console": "off",
