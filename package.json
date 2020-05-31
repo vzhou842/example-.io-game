@@ -20,24 +20,24 @@
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "throttle-debounce": "^2.1.0",
-    "webpack": "^4.41.2",
+    "webpack": "^4.43.0",
     "webpack-dev-middleware": "^3.7.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
-    "babel-eslint": "^10.0.3",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
     "cross-env": "^5.2.1",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.7.0",
     "jest": "^25.1.0",
     "mini-css-extract-plugin": "^0.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "webpack-cli": "^3.3.10",
+    "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
   }
 }
