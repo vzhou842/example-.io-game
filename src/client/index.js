@@ -8,10 +8,10 @@ import { downloadAssets } from './assets';
 import { initState } from './state';
 import { setLeaderboardHidden } from './leaderboard';
 
-// I'm using Bootstrap here for convenience, but I wouldn't recommend actually doing this for a real
-// site. It's heavy and will slow down your site - either only use a subset of Bootstrap, or just
-// write your own CSS.
-import 'bootstrap/dist/css/bootstrap.min.css';
+// I'm using a tiny subset of Bootstrap here for convenience - there's some wasted CSS,
+// but not much. In general, you should be careful using Bootstrap because it makes it
+// easy to unnecessarily bloat your site.
+import './css/bootstrap-reboot.css';
 import './css/main.css';
 
 const playMenu = (document.getElementById('play-menu'): any);

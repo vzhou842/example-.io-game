@@ -34,5 +34,15 @@ To run the project in a production setting, simply
 ```bash
 $ npm install
 $ npm run build
+$ npm run build:node
 $ npm start
+```
+
+## Tests
+
+To run the tests for this this project, simply
+
+```bash
+$ npm install
+$ npm test
 ```

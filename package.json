@@ -9,12 +9,12 @@
     "lint": "eslint --cache --ext .js,.jsx src/",
     "develop": "cross-env NODE_ENV=development babel-node src/server/server.js",
     "flow": "flow src/",
-    "start": "cross-env NODE_ENV=production node lib/server/server.js"
+    "start": "cross-env NODE_ENV=production node lib/server/server.js",
+    "test": "jest"
   },
   "author": "Victor Zhou",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "html-webpack-plugin": "^3.2.0",
     "lodash": "^4.17.15",
@@ -22,27 +22,29 @@
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "throttle-debounce": "^2.1.0",
-    "webpack": "^4.41.2",
+    "webpack": "^4.43.0",
     "webpack-dev-middleware": "^3.7.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.7.4",
+    "@babel/core": "^7.10.2",
     "@babel/node": "^7.4.5",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-env": "^7.10.2",
     "@babel/preset-flow": "^7.0.0",
-    "babel-eslint": "^10.0.3",
-    "babel-loader": "^8.0.6",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
     "cross-env": "^5.2.1",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-flowtype": "^3.9.1",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.7.0",
     "flow-bin": "^0.100.0",
+    "jest": "^25.1.0",
     "mini-css-extract-plugin": "^0.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "webpack-cli": "^3.3.10",
+    "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
   }
 }

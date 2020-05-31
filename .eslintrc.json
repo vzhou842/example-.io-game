@@ -1,15 +1,20 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base", "plugin:jest/recommended"],
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
+<<<<<<< HEAD
   "plugins": [
     "flowtype",
     "import"
   ],
+=======
+  "plugins": ["import", "jest"],
+>>>>>>> master
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "lines-between-class-members": "off",

@@ -5,6 +5,7 @@ script:
   - npm install
   - npm run flow
   - npm run lint
+  - npm test
 cache:
   directories:
     - node_modules
