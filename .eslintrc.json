@@ -7,14 +7,7 @@
     "es6": true,
     "jest/globals": true
   },
-<<<<<<< HEAD
-  "plugins": [
-    "flowtype",
-    "import"
-  ],
-=======
-  "plugins": ["import", "jest"],
->>>>>>> master
+  "plugins": ["import", "flowtype", "jest"],
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "lines-between-class-members": "off",
