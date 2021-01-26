@@ -3,6 +3,7 @@ module.exports = Object.freeze({
   PLAYER_MAX_HP: 100,
   PLAYER_SPEED: 400,
   PLAYER_FIRE_COOLDOWN: 0.25,
+  PLAYER_HP_RECOVERY_RATE: 2,
 
   BULLET_RADIUS: 3,
   BULLET_SPEED: 800,
@@ -15,7 +16,10 @@ module.exports = Object.freeze({
   MSG_TYPES: {
     JOIN_GAME: 'join_game',
     GAME_UPDATE: 'update',
-    INPUT: 'input',
+    INPUT_MOVE: 'input_move',
+    INPUT_FIRE: 'input_fire',
+    INPUT_DIRECTION: 'input_dir',
+    INPUT_TOGGLE: 'input_toggle',
     GAME_OVER: 'dead',
   },
 });

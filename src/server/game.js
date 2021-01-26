@@ -26,9 +26,27 @@ class Game {
     delete this.players[socket.id];
   }
 
-  handleInput(socket, dir) {
+  handleInputDir(socket, dir) {
     if (this.players[socket.id]) {
       this.players[socket.id].setDirection(dir);
+    }
+  }
+
+  handleInputMove(socket, dir) {
+    if (this.players[socket.id]) {
+      this.players[socket.id].setMoveDirection(dir);
+    }
+  }
+
+  handleInputToggle(socket, tog) {
+    if (this.players[socket.id]) {
+      this.players[socket.id].toggle(tog);
+    }
+  }
+
+  handleInputFire(socket) {
+    if (this.players[socket.id]) {
+      this.players[socket.id].openFire();
     }
   }
 
