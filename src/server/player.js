@@ -8,10 +8,21 @@ class Player extends ObjectClass {
     this.username = username;
     this.hp = Constants.PLAYER_MAX_HP;
     this.hp_recover = 1;
-    this.fireCooldown = 0;
+    this.fireCooldownCount = 0;
+    this.fireCooldown = Constants.PLAYER_FIRE_COOLDOWN;
     this.score = 0;
     this.bullets = 0;
     this.autofire = false;
+    this.move = '';
+    this.isBot = false;
+  }
+
+  restart() {
+    this.hp = Constants.PLAYER_MAX_HP;
+    this.hp_recover = 1;
+    this.fireCooldownCount = 0;
+    this.score = 0;
+    this.bullets = 0;
     this.move = '';
   }
 
@@ -49,9 +60,9 @@ class Player extends ObjectClass {
     }
 
     // Fire a bullet, if needed
-    this.fireCooldown -= dt;
-    if (this.fireCooldown <= 0 && this.autofire || this.bullets > 0) {
-      this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
+    this.fireCooldownCount -= dt;
+    if (this.fireCooldownCount <= 0 && this.autofire || this.bullets > 0) {
+      this.fireCooldownCount += this.fireCooldown;
       this.bullets--;
       return new Bullet(this.id, this.x, this.y, this.direction);
     }
@@ -67,7 +78,7 @@ class Player extends ObjectClass {
     if (tog == 'e') {
       this.autofire = ! this.autofire;
       this.bullets = 0;
-      this.fireCooldown = 0;
+      this.fireCooldownCount = 0;
     }
   }
 

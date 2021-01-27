@@ -5,8 +5,17 @@ import { updateFire } from './networking';
 import { updateMove } from './networking';
 import { updateToggle } from './networking';
 
+let lastFireTime=(new Date()).getTime();
+function handleFireInput() {
+  let curTime = (new Date()).getTime();
+  if (curTime - lastFireTime > 100) {
+    lastFireTime = curTime;
+    updateFire();
+  }
+}
+
 function onMouseClick(e) {
-  updateFire();
+  handleFireInput();
 }
 
 function onMouseMove(e) {
@@ -29,7 +38,7 @@ function onKeyDown(e) {
   } else if (e.code == 'ArrowRight' || e.code == 'KeyS') {
     moveDir = 'right';
   } else if (e.code == 'Space') {
-    updateFire();
+    handleFireInput();
     return;
   } else if (e.code == 'KeyE') {
     updateToggle('e');

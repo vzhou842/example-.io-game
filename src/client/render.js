@@ -6,7 +6,7 @@ import { getCurrentState } from './state';
 
 const Constants = require('../shared/constants');
 
-const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
+const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE, SMAP_SIZE } = Constants;
 
 // Get the canvas graphics context
 const canvas = document.getElementById('game-canvas');
@@ -43,6 +43,41 @@ function render() {
   // Draw all players
   renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
+
+  renderSmallMap(me, others);
+}
+
+function renderSmallMap(me, others) {
+
+  const canvasX = canvas.width - 110; 
+  const canvasY = canvas.height - 110; 
+  context.fillStyle = 'black';
+  context.fillRect(
+    canvasX,
+    canvasY,
+    SMAP_SIZE+4,
+    SMAP_SIZE+4,
+  );
+
+  context.fillStyle = 'pink';
+  const {x, y, d} = me;
+  context.fillRect(
+    canvasX + x * 100 / MAP_SIZE,
+    canvasY + y * 100 / MAP_SIZE,
+    4,
+    4,
+  );
+
+  context.fillStyle = 'white';
+  for (var i = 0; i < others.length; i++) {
+    const {x, y, d} = others[i];
+    context.fillRect(
+      canvasX + x * 100 / MAP_SIZE,
+      canvasY + y * 100 / MAP_SIZE,
+      2,
+      2,
+    );
+  }
 }
 
 function renderBackground(x, y) {
@@ -56,7 +91,9 @@ function renderBackground(x, y) {
     backgroundY,
     MAP_SIZE / 2,
   );
-  backgroundGradient.addColorStop(0, 'black');
+//  backgroundGradient.addColorStop(0, 'black');
+//  backgroundGradient.addColorStop(1, 'gray');
+  backgroundGradient.addColorStop(0, 'DeepSkyBlue');
   backgroundGradient.addColorStop(1, 'gray');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -96,6 +133,18 @@ function renderPlayer(me, player) {
     PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
     2,
   );
+
+/*
+  const canvasX1 = canvas.width - 110; 
+  const canvasY1 = canvas.height - 110; 
+  context.fillStyle = 'white';
+  context.fillRect(
+    canvasX1 ,
+    canvasY1 ,
+    PLAYER_RADIUS * 10,
+    20,
+  );
+*/
 }
 
 function renderBullet(me, bullet) {

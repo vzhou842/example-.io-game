@@ -1,5 +1,6 @@
 const Constants = require('../shared/constants');
 const Player = require('./player');
+const Robot = require('./bots');
 const applyCollisions = require('./collisions');
 
 class Game {
@@ -10,6 +11,16 @@ class Game {
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
+    this.addBot(new Robot(0));
+    this.addBot(new Robot(1));
+    this.addBot(new Robot(2));
+    this.addBot(new Robot(3));
+    this.addBot(new Robot(4));
+    this.addBot(new Robot(5));
+    this.addBot(new Robot(6));
+    this.addBot(new Robot(7));
+    this.addBot(new Robot(8));
+    this.addBot(new Robot(9));
   }
 
   addPlayer(socket, username) {
@@ -19,6 +30,14 @@ class Game {
     const x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     const y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     this.players[socket.id] = new Player(socket.id, username, x, y);
+  }
+
+  addBot(bot) {
+    this.addPlayer(bot, bot.username);
+    bot.player = this.players[bot.id];
+    this.players[bot.id].isBot = true;
+    this.players[bot.id].autofire = true;
+    this.players[bot.id].fireCooldown *= 4;
   }
 
   removePlayer(socket) {
@@ -90,7 +109,13 @@ class Game {
       const player = this.players[playerID];
       if (player.hp <= 0) {
         socket.emit(Constants.MSG_TYPES.GAME_OVER);
-        this.removePlayer(socket);
+        if (! player.isBot) {
+          this.removePlayer(socket);
+        } else {
+	  player.x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
+          player.y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5); 
+          player.restart();
+        }
       }
     });
 
