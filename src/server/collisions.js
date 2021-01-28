@@ -19,6 +19,20 @@ function applyCollisions(players, bullets) {
       }
     }
   }
+
+  for (let i = 0; i < players.length; i++) {
+    // Look for player collision
+    for (let j = 0; j < players.length; j++) {
+      if (i == j) continue;
+      const p1 = players[i];
+      const p2 = players[j];
+      if (p1.distanceTo(p2) <= Constants.PLAYER_RADIUS*2) {
+        p1.takeBulletDamage();
+        p2.takeBulletDamage();
+      }
+    }
+  }
+
   return destroyedBullets;
 }
 

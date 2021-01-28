@@ -11,16 +11,9 @@ class Game {
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
-    this.addBot(new Robot(0));
-    this.addBot(new Robot(1));
-    this.addBot(new Robot(2));
-    this.addBot(new Robot(3));
-    this.addBot(new Robot(4));
-    this.addBot(new Robot(5));
-    this.addBot(new Robot(6));
-    this.addBot(new Robot(7));
-    this.addBot(new Robot(8));
-    this.addBot(new Robot(9));
+
+    for (let i = 0; i < 50; i++) 
+      this.addBot(new Robot(i));
   }
 
   addPlayer(socket, username) {
@@ -37,7 +30,7 @@ class Game {
     bot.player = this.players[bot.id];
     this.players[bot.id].isBot = true;
     this.players[bot.id].autofire = true;
-    this.players[bot.id].fireCooldown *= 4;
+//    this.players[bot.id].fireCooldown *= 4;
   }
 
   removePlayer(socket) {
@@ -142,7 +135,8 @@ class Game {
 
   createUpdate(player, leaderboard) {
     const nearbyPlayers = Object.values(this.players).filter(
-      p => p !== player && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
+                         // Just filter out the player itself, we need all players inf to make the map
+      p => p !== player, //  && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
     );
     const nearbyBullets = this.bullets.filter(
       b => b.distanceTo(player) <= Constants.MAP_SIZE / 2,

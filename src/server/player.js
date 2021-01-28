@@ -15,6 +15,7 @@ class Player extends ObjectClass {
     this.autofire = false;
     this.move = '';
     this.isBot = false;
+    this.shieldTime = 5; // Player will be shielded damage for 5 seconds
   }
 
   restart() {
@@ -30,6 +31,9 @@ class Player extends ObjectClass {
   update(dt) {
     // We are not going to move automatically
     // super.update(dt);
+
+    if (this.shieldTime > 0) this.shieldTime -= dt;
+
     if (this.move != '') {
       if (this.move == 'up') {
         this.y -= dt * Constants.PLAYER_SPEED;
@@ -89,7 +93,8 @@ class Player extends ObjectClass {
   }
 
   takeBulletDamage() {
-    this.hp -= Constants.BULLET_DAMAGE;
+    if (this.shieldTime < 0)
+      this.hp -= Constants.BULLET_DAMAGE;
   }
 
   onDealtDamage() {
@@ -100,6 +105,7 @@ class Player extends ObjectClass {
     return {
       ...(super.serializeForUpdate()),
       direction: this.direction,
+      username: this.username,
       hp: this.hp,
     };
   }

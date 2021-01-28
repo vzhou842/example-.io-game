@@ -4,7 +4,11 @@ const Player = require('./player');
 class Robot {
   constructor(idx) {
     // this.id = "bot" + (new Date()).getTime();
-    const names = [ "Peter", "Igor", "Ivan", "Fighter", "Flyer", "YouNameMe", "Scim", "Cheese", "Red", "Mr.C", "Mr.A" ];
+    const names = [ "Peter", "Igor", "Ivan", "Fighter",    "Flyer", "Rose",      "Scim", "Cheese", "Red", "Greenbean", 
+                    "Becky", "Abby", "Addin", "Mr.Cheese", "Ali",   "Pretty",    "HotDog", "Pizza", "Sandwich", "Ele",
+                    "Fish", "Fast", "Super", "Ada",        "Macy",   "Mope",     "Snake",   "Dog",   "Puma", "Checken",
+                    "Deer", "Ship", "Loud", "Me!!!",       "PickMe", "Shooting", "Flagship", "Beer", "Glare", "Ocean", 
+                    "Sky", "Runner", "Winer", "Shopper",   "Looking", "Better",  "High",     "Rachel", "Rain", "Beauty", "Iam51",];
     this.id = "bot" + idx;
     this.username = names[idx];
     this.ms = (new Date()).getTime();
