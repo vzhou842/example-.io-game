@@ -47,8 +47,8 @@ function joinGame(username) {
   game.addPlayer(this, username);
 }
 
-function handleInputFire() {
-  game.handleInputFire(this);
+function handleInputFire(start) {
+  game.handleInputFire(this, start);
 }
 
 function handleInputDir(dir) {

@@ -56,9 +56,9 @@ class Game {
     }
   }
 
-  handleInputFire(socket) {
+  handleInputFire(socket, start) {
     if (this.players[socket.id]) {
-      this.players[socket.id].openFire();
+      this.players[socket.id].openFire(start);
     }
   }
 
@@ -138,15 +138,19 @@ class Game {
                          // Just filter out the player itself, we need all players inf to make the map
       p => p !== player, //  && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
     );
-    const nearbyBullets = this.bullets.filter(
-      b => b.distanceTo(player) <= Constants.MAP_SIZE / 2,
+    const otherNearbyBullets = this.bullets.filter(
+      b => (b.distanceTo(player) <= Constants.MAP_SIZE / 2) && (b.parentID != player.id),
+    );
+    const myNearbyBullets = this.bullets.filter(
+      b => (b.distanceTo(player) <= Constants.MAP_SIZE / 2) && (b.parentID == player.id),
     );
 
     return {
       t: Date.now(),
       me: player.serializeForUpdate(),
       others: nearbyPlayers.map(p => p.serializeForUpdate()),
-      bullets: nearbyBullets.map(b => b.serializeForUpdate()),
+      mybullets: myNearbyBullets.map(b => b.serializeForUpdate()),
+      otherbullets: otherNearbyBullets.map(b => b.serializeForUpdate()),
       leaderboard,
     };
   }

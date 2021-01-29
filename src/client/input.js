@@ -6,11 +6,12 @@ import { updateMove } from './networking';
 import { updateToggle } from './networking';
 
 let lastFireTime=(new Date()).getTime();
+let lastKeydown = '';
 function handleFireInput() {
   let curTime = (new Date()).getTime();
-  if (curTime - lastFireTime > 100) {
+  if (curTime - lastFireTime > 500) {
     lastFireTime = curTime;
-    updateFire();
+    updateFire('once');
   }
 }
 
@@ -28,25 +29,60 @@ function onTouchInput(e) {
 }
 
 function onKeyDown(e) {
-  let moveDir = ''
-  if (e.code == 'ArrowUp' || e.code == 'KeyW') {
-    moveDir = 'up';
-  } else if (e.code == 'ArrowDown' || e.code == 'KeyZ') {
-    moveDir = 'down';
-  } else if (e.code == 'ArrowLeft' || e.code == 'KeyA') {
-    moveDir = 'left';
-  } else if (e.code == 'ArrowRight' || e.code == 'KeyS') {
-    moveDir = 'right';
-  } else if (e.code == 'Space') {
-    handleFireInput();
-    return;
-  } else if (e.code == 'KeyE') {
-    updateToggle('e');
-  }
+  const code = translateKey(e.code);
+  
+  if (lastKeydown != code)
+  	handleKeyDown(code);
+//  if ((lastKeydown != code) && (lastKeydown != '')) handleKeyUp(lastKeydown);
+  lastKeydown = code;
+}
 
-  if (moveDir != '') {
-    updateMove(moveDir);
+function onKeyUp(e) {
+  const code = translateKey(e.code);
+
+//  if ((lastKeydown != code) && (lastKeydown != '')) handleKeyUp(lastKeydown);
+  handleKeyUp(code);
+  lastKeydown = '';
+}
+
+function handleKeyDown(keyCode) {
+  if (keyCode == 'up' || keyCode == 'down' || keyCode == 'left' || keyCode == 'right') {
+    updateMove(keyCode);
+    return;
   }
+  if (keyCode == 'fire') {
+    updateFire('on');
+  }
+  if (keyCode == 'e') {
+    updateToggle(keyCode);
+  }
+}
+
+function handleKeyUp(keyCode) {
+  if (keyCode == 'up' || keyCode == 'down' || keyCode == 'left' || keyCode == 'right') {
+    updateMove('');
+    return;
+  }
+  if (keyCode == 'fire') {
+    updateFire('off');
+  }
+}
+
+function translateKey(keyCode) {
+  if (keyCode == 'ArrowUp' || keyCode == 'KeyW') {
+    return 'up';
+  } else if (keyCode == 'ArrowDown' || keyCode == 'KeyZ') {
+    return 'down';
+  } else if (keyCode == 'ArrowLeft' || keyCode == 'KeyA') {
+    return 'left';
+  } else if (keyCode == 'ArrowRight' || keyCode == 'KeyS') {
+    return 'right';
+  } else if (keyCode == 'Space') {
+    return 'fire';
+  } else if (keyCode == 'KeyE') {
+    return 'e'
+  }
+  return keyCode;
 }
 
 function handleDir(x, y) {
@@ -59,6 +95,7 @@ export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseMove);
   window.addEventListener('click', onMouseClick);
   window.addEventListener('keydown', onKeyDown);
+  window.addEventListener('keyup', onKeyUp);
   window.addEventListener('touchstart', onTouchInput);
   window.addEventListener('touchmove', onTouchInput);
 }

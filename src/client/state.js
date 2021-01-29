@@ -47,7 +47,7 @@ function getBaseUpdate() {
   return -1;
 }
 
-// Returns { me, others, bullets }
+// Returns { me, others, mybullets, otherbullets }
 export function getCurrentState() {
   if (!firstServerTimestamp) {
     return {};
@@ -67,11 +67,13 @@ export function getCurrentState() {
     return {
       me: interpolateObject(baseUpdate.me, next.me, ratio),
       others: interpolateObjectArray(baseUpdate.others, next.others, ratio),
-      bullets: interpolateObjectArray(baseUpdate.bullets, next.bullets, ratio),
+      mybullets: interpolateObjectArray(baseUpdate.mybullets, next.mybullets, ratio),
+      otherbullets: interpolateObjectArray(baseUpdate.otherbullets, next.otherbullets, ratio),
     };
   }
 }
 
+// interpolate x, y and direction only
 function interpolateObject(object1, object2, ratio) {
   if (!object2) {
     return object1;
@@ -81,10 +83,10 @@ function interpolateObject(object1, object2, ratio) {
   Object.keys(object1).forEach(key => {
     if (key === 'direction') {
       interpolated[key] = interpolateDirection(object1[key], object2[key], ratio);
-    } else if (key === 'username') {
-      interpolated[key] = object1[key];
+    } else if (key === 'x' || key == 'y') {
+      interpolated[key] = Math.round(object1[key] + (object2[key] - object1[key]) * ratio);
     } else {
-      interpolated[key] = object1[key] + (object2[key] - object1[key]) * ratio;
+      interpolated[key] = object1[key];
     }
   });
   return interpolated;

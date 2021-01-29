@@ -38,8 +38,8 @@ export const updateDirection = throttle(20, dir => {
   socket.emit(Constants.MSG_TYPES.INPUT_DIRECTION, dir);
 });
 
-export const updateFire = throttle(20, () => {
-  socket.emit(Constants.MSG_TYPES.INPUT_FIRE);
+export const updateFire = throttle(20, start => {
+  socket.emit(Constants.MSG_TYPES.INPUT_FIRE, start);
 });
 
 export const updateMove = throttle(20, dir => {

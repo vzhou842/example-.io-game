@@ -47,7 +47,6 @@ class Player extends ObjectClass {
       if (this.move == 'right') {
         this.x += dt * Constants.PLAYER_SPEED;
       }
-      this.move = '';
     }
 
     // Update score
@@ -82,14 +81,19 @@ class Player extends ObjectClass {
     if (tog == 'e') {
       this.autofire = ! this.autofire;
       this.bullets = 0;
-      this.fireCooldownCount = 0;
+      if (this.fireCooldownCount < 0) this.fireCooldownCount = 0;
     }
   }
 
-  openFire() {
-    if (! this.autofire) {
-      this.bullets ++;
+  openFire(start) {
+//    if (! this.autofire) {
+//      this.bullets ++;
+//    }
+    if (start == 'once') {
+       this.bullets ++;
     }
+    this.autofire = (start == 'on');
+    if (this.fireCooldownCount < 0) this.fireCooldownCount = 0;
   }
 
   takeBulletDamage() {
