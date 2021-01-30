@@ -18,6 +18,8 @@ class Robot {
     this.directionTime = 0;
     this.clockwise = true;
     if (Math.random() < 0.5) this.clockwise = !this.clockwise;
+    this.canvasWidth = 1;
+    this.canvasHeight = 1;
   }
 
   emit(event, context) {

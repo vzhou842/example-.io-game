@@ -16,6 +16,8 @@ class Player extends ObjectClass {
     this.move = '';
     this.isBot = false;
     this.shieldTime = 5; // Player will be shielded damage for 5 seconds
+    this.canvasWidth = Constants.MAP_SIZE / 4;
+    this.canvasHeight = Constants.MAP_SIZE / 4;
   }
 
   restart() {
@@ -83,6 +85,12 @@ class Player extends ObjectClass {
       this.bullets = 0;
       if (this.fireCooldownCount < 0) this.fireCooldownCount = 0;
     }
+  }
+
+  handleCanvasSize(w, h) {
+    this.canvasWidth = w;
+    this.canvasHeight = h;
+    console.log("Player canvas size:", w, h);
   }
 
   openFire(start) {

@@ -37,11 +37,16 @@ io.on('connection', socket => {
   socket.on(Constants.MSG_TYPES.INPUT_DIRECTION, handleInputDir);
   socket.on(Constants.MSG_TYPES.INPUT_MOVE, handleInputMove);
   socket.on(Constants.MSG_TYPES.INPUT_TOGGLE, handleInputToggle);
+  socket.on(Constants.MSG_TYPES.UPDATE_CANVAS_SIZE, handleCanvasSize);
   socket.on('disconnect', onDisconnect);
 });
 
 // Setup the Game
 const game = new Game();
+
+function handleCanvasSize(w, h) {
+  game.handleCanvasSize(this, w, h);
+}
 
 function joinGame(username) {
   game.addPlayer(this, username);

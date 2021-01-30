@@ -3,6 +3,7 @@
 import { debounce } from 'throttle-debounce';
 import { getAsset } from './assets';
 import { getCurrentState } from './state';
+import { updateCanvasSize } from './networking';
 
 const Constants = require('../shared/constants');
 
@@ -19,6 +20,8 @@ function setCanvasDimensions() {
   const scaleRatio = Math.max(1, 800 / window.innerWidth);
   canvas.width = scaleRatio * window.innerWidth;
   canvas.height = scaleRatio * window.innerHeight;
+  updateCanvasSize(canvas.width, canvas.height);
+//  console.log(canvas.width, canvas.height, scaleRatio);
 }
 
 window.addEventListener('resize', debounce(40, setCanvasDimensions));
@@ -37,7 +40,15 @@ canvas.onselectstart = function(e) {
     return false;
 }
 
+let firstRenderUpdate = true;
+
 function render() {
+
+  if (firstRenderUpdate) {
+    updateCanvasSize(canvas.width, canvas.height);
+    firstRenderUpdate = false;
+  }
+
   const { me, others, mybullets, otherbullets } = getCurrentState();
   if (!me) {
     return;

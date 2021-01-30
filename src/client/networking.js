@@ -50,3 +50,6 @@ export const updateToggle = throttle(20, tog => {
   socket.emit(Constants.MSG_TYPES.INPUT_TOGGLE, tog);
 });
 
+export const updateCanvasSize = throttle(20, (w, h) => {
+  socket.emit(Constants.MSG_TYPES.UPDATE_CANVAS_SIZE, w, h);
+});

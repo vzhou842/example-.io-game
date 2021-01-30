@@ -19,6 +19,7 @@ module.exports = Object.freeze({
   MSG_TYPES: {
     JOIN_GAME: 'join_game',
     GAME_UPDATE: 'update',
+    UPDATE_CANVAS_SIZE: 'update_canvas_size',
     INPUT_MOVE: 'input_move',
     INPUT_FIRE: 'input_fire',
     INPUT_DIRECTION: 'input_dir',

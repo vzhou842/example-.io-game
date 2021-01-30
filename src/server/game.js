@@ -47,6 +47,12 @@ class Game {
     delete this.players[socket.id];
   }
 
+  handleCanvasSize(socket, w, h) {
+    if (this.players[socket.id]) {
+      this.players[socket.id].handleCanvasSize(w, h);
+    }
+  }
+
   handleInputDir(socket, dir) {
     if (this.players[socket.id]) {
       this.players[socket.id].setDirection(dir);
@@ -146,10 +152,11 @@ class Game {
       p => p !== player, //  && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
     );
     const otherNearbyBullets = this.bullets.filter(
-      b => (b.distanceTo(player) <= Constants.MAP_SIZE / 2) && (b.parentID != player.id),
+ //     b => (b.distanceTo(player) <= Constants.MAP_SIZE / 2) && (b.parentID != player.id),
+      b => (b.parentID != player.id) && (Math.abs(b.x - player.x) < player.canvasWidth) && (Math.abs(b.y - player.y) < player.canvasHeight),
     );
     const myNearbyBullets = this.bullets.filter(
-      b => (b.distanceTo(player) <= Constants.MAP_SIZE / 2) && (b.parentID == player.id),
+      b => (b.parentID == player.id) && (Math.abs(b.x - player.x) < player.canvasWidth) && (Math.abs(b.y - player.y) < player.canvasHeight),
     );
 
     return {
