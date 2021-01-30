@@ -16,6 +16,15 @@ class Game {
       this.addBot(new Robot(i));
   }
 
+  addBotWithTimer(bot) {
+    // check if bot is passed in
+    // if this.addBotWithTimer.arguments.length == 1
+    // bot = bot || "other value? null?"
+    // if (bot === undefined)
+
+    this.addBot(bot);
+  }
+
   addPlayer(socket, username) {
     this.sockets[socket.id] = socket;
 
@@ -102,12 +111,10 @@ class Game {
       const player = this.players[playerID];
       if (player.hp <= 0) {
         socket.emit(Constants.MSG_TYPES.GAME_OVER);
-        if (! player.isBot) {
-          this.removePlayer(socket);
-        } else {
-	  player.x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
-          player.y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5); 
-          player.restart();
+        this.removePlayer(socket);
+
+        if (player.isBot) {
+	  setTimeout(() => { this.addBotWithTimer(socket) }, 5000);
         }
       }
     });
