@@ -18,6 +18,7 @@ class Player extends ObjectClass {
     this.shieldTime = 5; // Player will be shielded damage for 5 seconds
     this.canvasWidth = Constants.MAP_SIZE / 4;
     this.canvasHeight = Constants.MAP_SIZE / 4;
+    this.collisionCooldown = Constants.PLAYER_COLLISION_COOLDOWN;
   }
 
   restart() {
@@ -72,6 +73,8 @@ class Player extends ObjectClass {
       return new Bullet(this.id, this.x, this.y, this.direction);
     }
 
+    if (this.collisionCooldown > 0) this.collisionCooldown -= dt;
+
     return null;
   }
 
@@ -109,6 +112,13 @@ class Player extends ObjectClass {
       this.hp -= Constants.BULLET_DAMAGE;
   }
 
+  takeCollisionDamage() {
+    if (this.collisionCooldown < 0) {
+      this.takeBulletDamage();
+      this.collisionCooldown = Constants.PLAYER_COLLISION_COOLDOWN;
+    }
+  }
+
   onDealtDamage() {
     this.score += Constants.SCORE_BULLET_HIT;
   }
@@ -119,6 +129,7 @@ class Player extends ObjectClass {
       direction: this.direction,
       username: this.username,
       hp: this.hp,
+      shieldTime: this.shieldTime,
     };
   }
 }

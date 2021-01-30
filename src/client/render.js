@@ -194,6 +194,14 @@ function renderPlayer(me, player) {
   );
   context.restore();
 
+  if (player.shieldTime >= 0) {
+    // draw a circle to indicate the protection
+    context.beginPath();
+    context.arc(canvasX, canvasY, PLAYER_RADIUS + 1, 0, 2 * Math.PI, false);
+    context.lineWidth = 3;
+    context.strokeStyle = (me == player?'#0000FF':'#FF0000');
+    context.stroke();
+  }
 
   // Draw health bar
   context.fillStyle = 'white';

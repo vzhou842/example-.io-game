@@ -66,8 +66,8 @@ function applyCollisions(players, bullets) {
       const p1 = players_arr[i];
       const p2 = players_arr[j];
       if (p1.distanceTo(p2) <= Constants.PLAYER_RADIUS*2) {
-        p1.takeBulletDamage();
-        p2.takeBulletDamage();
+        p1.takeCollisionDamage();
+        p2.takeCollisionDamage();
       }
     }
   }
