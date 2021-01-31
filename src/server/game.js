@@ -12,7 +12,7 @@ class Game {
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
 
-    for (let i = 0; i < 60; i++) 
+    for (let i = 0; i < 100; i++) 
       this.addBot(new Robot(i));
   }
 
@@ -29,8 +29,8 @@ class Game {
     this.sockets[socket.id] = socket;
 
     // Generate a position to start this player at.
-    const x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
-    const y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
+    const x = Constants.MAP_SIZE * (0.1 + Math.random() * 0.8);
+    const y = Constants.MAP_SIZE * (0.1 + Math.random() * 0.8);
     this.players[socket.id] = new Player(socket.id, username, x, y);
   }
 

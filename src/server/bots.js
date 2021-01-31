@@ -43,9 +43,21 @@ class Robot {
         // at least one sec
         (d - this.ms) >  1000) {
 
-       this.ms = d;
+      this.ms = d;
 
-      if (Math.random() < 0.1) {
+      if (this.player.x == 0 || this.player.x == Constants.MAP_SIZE || this.player.y == 0 || this.player.y == Constants.MAP_SZIE) {
+        if (Math.random() < 0.4) {
+          if (this.player.x == 0) {
+            this.move = "right";
+          } else if (this.player.x == Constants.MAP_SIZE) {
+            this.move = "left";
+          } else if (this.player.y == 0) {
+            this.move = "down";
+          } else {
+            this.move = "up";
+          } 
+        }
+      } else if (Math.random() < 0.1) {
 	const r = Math.random();
         if (r < 0.2) {
           this.move = "";
