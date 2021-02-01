@@ -36,6 +36,14 @@ button:focus {
   display: none !important;
 }
 
+.bigtext {
+  font-size: 30px;
+}
+
+.bigtext2 {
+  font-size: 30px;
+}
+
 #game-canvas {
   width: 100%;
   height: 100%;
@@ -88,7 +96,7 @@ button:focus {
 }
 
 #leaderboard td {
-  text-align: center;
+  text-align: left;
   padding: 2px 5px;
 }
 
