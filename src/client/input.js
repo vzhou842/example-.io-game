@@ -135,7 +135,7 @@ export function stopCapturingInput() {
   window.removeEventListener('click', onMouseClick);
   window.removeEventListener('keydown', onKeyDown);
   window.removeEventListener('keyup', onKeyUp);
-  window.removeventListener('blur', onLostFocus);
+  window.removeEventListener('blur', onLostFocus);
   window.removeEventListener('touchstart', onTouchInput);
   window.removeEventListener('touchmove', onTouchInput);
 }

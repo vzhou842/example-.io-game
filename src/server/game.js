@@ -51,6 +51,10 @@ class Game {
   }
 
   removePlayer(socket) {
+    // Could be called from disconnect and the player might have been removed already.
+    if (this.players[socket.id] == null) {
+      return; // cover both null and undefined
+    }
     this.players[socket.id].remove();
     delete this.sockets[socket.id];
     delete this.players[socket.id];
