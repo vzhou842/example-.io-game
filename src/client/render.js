@@ -97,7 +97,7 @@ function render() {
   }
 */
   // set line color
-  context.strokeStyle = '#505050';
+  context.strokeStyle = '#B0B0B0';
   context.stroke();
   
 
@@ -170,7 +170,7 @@ function renderBackground(x, y) {
   backgroundGradient.addColorStop(1, 'gray');
   context.fillStyle = backgroundGradient;
 */
-  context.fillStyle = "#A0A0A0";
+  context.fillStyle = "#C0C0C0";
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
