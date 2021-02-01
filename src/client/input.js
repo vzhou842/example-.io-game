@@ -6,7 +6,8 @@ import { updateMove } from './networking';
 import { updateToggle } from './networking';
 
 let lastFireTime=(new Date()).getTime();
-let lastKeydown = '';
+let keydownMap = {};
+
 function handleFireInput() {
   let curTime = (new Date()).getTime();
   if (curTime - lastFireTime > 500) {
@@ -29,60 +30,77 @@ function onTouchInput(e) {
 }
 
 function onKeyDown(e) {
-  const code = translateKey(e.code);
-  
-  if (lastKeydown != code)
-  	handleKeyDown(code);
-//  if ((lastKeydown != code) && (lastKeydown != '')) handleKeyUp(lastKeydown);
-  lastKeydown = code;
+  const keyCode = e.code;
+
+// console.log(keydownMap);
+
+  if (keyCode == 'ArrowUp' || keyCode == 'KeyW' || keyCode == 'ArrowDown' || keyCode == 'KeyZ' ||
+      keyCode == 'ArrowLeft' || keyCode == 'KeyA' || keyCode == 'ArrowRight' || keyCode == 'KeyS' ||
+      keyCode == 'Space') {
+
+    if (keydownMap[keyCode]) return;
+    keydownMap[keyCode] = true;
+
+    if (keyCode == 'Space') {
+      updateFire('on');
+    } else {
+      handleKeyChangeMove();
+    }
+
+    e.preventDefault();
+  }
 }
 
 function onKeyUp(e) {
-  const code = translateKey(e.code);
+  const keyCode = e.code;
 
-//  if ((lastKeydown != code) && (lastKeydown != '')) handleKeyUp(lastKeydown);
-  handleKeyUp(code);
-  lastKeydown = '';
-}
-
-function handleKeyDown(keyCode) {
-  if (keyCode == 'up' || keyCode == 'down' || keyCode == 'left' || keyCode == 'right') {
-    updateMove(keyCode);
+  if (keyCode == 'KeyE') {
+    updateToggle('e');
+    e.preventDefault();
     return;
   }
-  if (keyCode == 'fire') {
-    updateFire('on');
-  }
-  if (keyCode == 'e') {
-    updateToggle(keyCode);
+
+  if (keyCode == 'ArrowUp' || keyCode == 'KeyW' || keyCode == 'ArrowDown' || keyCode == 'KeyZ' ||
+      keyCode == 'ArrowLeft' || keyCode == 'KeyA' || keyCode == 'ArrowRight' || keyCode == 'KeyS' ||
+      keyCode == 'Space') {
+
+    if (!keydownMap[keyCode]) return;
+    keydownMap[keyCode] = false;
+    if (keyCode == 'Space') {
+      updateFire('off');
+    } else {
+      handleKeyChangeMove();
+    }
+    e.preventDefault();
   }
 }
 
-function handleKeyUp(keyCode) {
-  if (keyCode == 'up' || keyCode == 'down' || keyCode == 'left' || keyCode == 'right') {
-    updateMove('');
-    return;
-  }
-  if (keyCode == 'fire') {
-    updateFire('off');
-  }
-}
+function handleKeyChangeMove() {
+  let dir = 0;
+  let u = keydownMap['ArrowUp'] || keydownMap['KeyW'];
+  let l = keydownMap['ArrowLeft'] || keydownMap['KeyA'];
+  let r = keydownMap['ArrowRight'] || keydownMap['KeyS'];
+  let d = keydownMap['ArrowDown'] || keydownMap['KeyZ'];
 
-function translateKey(keyCode) {
-  if (keyCode == 'ArrowUp' || keyCode == 'KeyW') {
-    return 'up';
-  } else if (keyCode == 'ArrowDown' || keyCode == 'KeyZ') {
-    return 'down';
-  } else if (keyCode == 'ArrowLeft' || keyCode == 'KeyA') {
-    return 'left';
-  } else if (keyCode == 'ArrowRight' || keyCode == 'KeyS') {
-    return 'right';
-  } else if (keyCode == 'Space') {
-    return 'fire';
-  } else if (keyCode == 'KeyE') {
-    return 'e'
-  }
-  return keyCode;
+  if (u && d) {
+    if (l && r) dir = 0;
+    else if (l) dir = 5; // left
+    else if (r) dir = 1; // right
+  } else if (l && r) {
+    if (u) dir = 3; // up;
+    else if (d) dir = 7; // down;
+  } else if (l) {
+    if (u) dir = 4; // up left
+    else if (d) dir = 6; // down left
+    else dir = 5; // left
+  } else if (r) {
+    if (u) dir = 2; // up right
+    else if (d) dir = 8; // down right
+    else dir = 1; // right
+  } else if (u) dir = 3; // up
+  else if (d) dir = 7; // down;
+
+  updateMove(dir);
 }
 
 function handleDir(x, y) {
@@ -90,12 +108,24 @@ function handleDir(x, y) {
   updateDirection(dir);
 }
 
+function onLostFocus() {
+  if (keydownMap['Space']) updateFire('off');
+  if (keydownMap['ArrowUp'] || keydownMap['KeyW'] ||
+    keydownMap['ArrowLeft'] || keydownMap['KeyA'] ||
+    keydownMap['ArrowRight'] || keydownMap['KeyS'] ||
+    keydownMap['ArrowDown'] || keydownMap['KeyZ']) {
+
+    updateMove(0);
+  }
+  keydownMap={};
+}
 
 export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseMove);
   window.addEventListener('click', onMouseClick);
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
+  window.addEventListener('blur', onLostFocus);
   window.addEventListener('touchstart', onTouchInput);
   window.addEventListener('touchmove', onTouchInput);
 }
@@ -104,6 +134,8 @@ export function stopCapturingInput() {
   window.removeEventListener('mousemove', onMouseMove);
   window.removeEventListener('click', onMouseClick);
   window.removeEventListener('keydown', onKeyDown);
+  window.removeEventListener('keyup', onKeyUp);
+  window.removeventListener('blur', onLostFocus);
   window.removeEventListener('touchstart', onTouchInput);
   window.removeEventListener('touchmove', onTouchInput);
 }

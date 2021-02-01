@@ -2,6 +2,14 @@ const ObjectClass = require('./object');
 const Bullet = require('./bullet');
 const Constants = require('../shared/constants');
 
+// 0: still
+// 1: right, 2: upright, 3: up,   4: upleft 
+// 5: left,  6: downleft 7: down, 8:downright
+const playermovedir=[ [0,0],
+                      [1, 0], [1/Math.sqrt(2), -1/Math.sqrt(2)],
+                      [0, -1], [-1/Math.sqrt(2), -1/Math.sqrt(2)],
+                      [-1,0], [-1/Math.sqrt(2), 1/Math.sqrt(2)],
+                      [0,1], [1/Math.sqrt(2), 1/Math.sqrt(2)]];
 class Player extends ObjectClass {
   constructor(id, username, x, y) {
     super(id, x, y, Math.random() * 2 * Math.PI, Constants.PLAYER_SPEED);
@@ -13,7 +21,7 @@ class Player extends ObjectClass {
     this.score = 0;
     this.bullets = 0;
     this.autofire = false;
-    this.move = '';
+    this.move = 0;
     this.isBot = false;
     this.shieldTime = 5; // Player will be shielded damage for 5 seconds
     this.canvasWidth = Constants.MAP_SIZE / 4;
@@ -27,7 +35,7 @@ class Player extends ObjectClass {
     this.fireCooldownCount = 0;
     this.score = 0;
     this.bullets = 0;
-    this.move = '';
+    this.move = 0;
   }
 
   // Returns a newly created bullet, or null.
@@ -37,20 +45,8 @@ class Player extends ObjectClass {
 
     if (this.shieldTime > 0) this.shieldTime -= dt;
 
-    if (this.move != '') {
-      if (this.move == 'up') {
-        this.y -= dt * Constants.PLAYER_SPEED;
-      }
-      if (this.move == 'down') {
-        this.y += dt * Constants.PLAYER_SPEED;
-      }
-      if (this.move == 'left') {
-        this.x -= dt * Constants.PLAYER_SPEED;
-      }
-      if (this.move == 'right') {
-        this.x += dt * Constants.PLAYER_SPEED;
-      }
-    }
+    this.x += dt * Constants.PLAYER_SPEED * playermovedir[this.move][0];
+    this.y += dt * Constants.PLAYER_SPEED * playermovedir[this.move][1];
 
     // Update score
     this.score += dt * Constants.SCORE_PER_SECOND;

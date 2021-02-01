@@ -14,7 +14,7 @@ class Robot {
            else   this.username = this.id;
     this.ms = (new Date()).getTime();
     this.player = null;
-    this.move = "right";
+    this.move = 0;
     this.direction = -3.1415926;
     this.directionTime = 0;
     this.clockwise = true;
@@ -48,28 +48,18 @@ class Robot {
       if (this.player.x == 0 || this.player.x == Constants.MAP_SIZE || this.player.y == 0 || this.player.y == Constants.MAP_SZIE) {
         if (Math.random() < 0.4) {
           if (this.player.x == 0) {
-            this.move = "right";
+            this.move = 1; // right
           } else if (this.player.x == Constants.MAP_SIZE) {
-            this.move = "left";
+            this.move = 5; // left
           } else if (this.player.y == 0) {
-            this.move = "down";
+            this.move = 7; // down
           } else {
-            this.move = "up";
+            this.move = 3; // up
           } 
         }
       } else if (Math.random() < 0.1) {
-	const r = Math.random();
-        if (r < 0.2) {
-          this.move = "";
-        } else if (r < 0.4) {
-          this.move = "right";
-        } else if (r < 0.6) {
-          this.move = "left";
-        } else if (r < 0.8) {
-          this.move = "up";
-        } else {
-          this.move = "down";
-        }
+	this.move = Math.floor(Math.random() * 10);
+        if (this.move > 8) this.move = 0; // range: 0 - 8
       }
     }
 
