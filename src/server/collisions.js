@@ -163,7 +163,47 @@ function applyCollisions(playersObj, bulletsObj) {
   }
 }
 
+function getObjectUpdates(player) {
 
+    const halfw = Math.round ( (Math.floor(player.canvasWidth / Constants.MAP_OBJ_GRID_SIZE) + 1) / 2);
+    const halfh = Math.round ( (Math.floor(player.canvasHeight / Constants.MAP_OBJ_GRID_SIZE) + 1) / 2);
+
+    const mapX1 = Math.max(0, player.mapX - halfw);
+    const mapX2 = Math.min(objectMapMaxIndex, player.mapX + halfw);
+    const mapY1 = Math.max(0, player.mapY - halfh);
+    const mapY2 = Math.min(objectMapMaxIndex, player.mapY + halfh);
+
+    let nearbyPlayers = [];
+    let otherNearbyBullets = [];
+    let myNearbyBullets = [];
+    let c = 0;
+    for (let x = mapX1; x <= mapX2; x++) {
+      for (let y = mapY1; y <= mapY2; y++) {
+        for (let i = 1; i <= objectMap[x][y][0]; i++) {
+          c++;
+          const obj = objectMap[x][y][i];
+          if (obj.getType() < 20) {
+            // bullets and raw objects
+            if (obj.parentID != player.id) {
+              otherNearbyBullets.push(obj);
+            } else {
+              myNearbyBullets.push(obj);
+            }
+          } else if (obj.getType() < 30) {
+            // players
+            if (obj.id != player.id) {
+              nearbyPlayers.push(obj);
+            }
+          }
+        }
+      }
+    }
+ 
+//    if (c > 10)
+//    console.log("for player:" + player.username + " obj:" + c + " hx:" + halfw + " hy:" + halfh + " cw:" + player.canvasWidth + " cy:" + player.canvasHeight);
+ 
+    return {nearbyPlayers, otherNearbyBullets, myNearbyBullets};
+}
 
 module.exports = {
   init, 
@@ -171,6 +211,7 @@ module.exports = {
   applyCollisions2,
   addObject,
   updateObject,
-  removeObject
+  removeObject,
+  getObjectUpdates
 }
 

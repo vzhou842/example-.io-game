@@ -13,7 +13,13 @@ class Object {
     this.mapY = -1;
     this.mapPos = -1;
 
+    this.type = 0;
+
     CollisionMap.addObject(this);
+  }
+
+  getType() {
+    return this.type;
   }
 
   update(dt) {

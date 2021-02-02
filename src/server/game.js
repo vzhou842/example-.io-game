@@ -49,6 +49,8 @@ class Game {
     this.players[bot.id].isBot = true;
     this.players[bot.id].autofire = true;
 //    this.players[bot.id].fireCooldown *= 4;
+    this.players[bot.id].canvasWidth = bot.canvasWidth;
+    this.players[bot.id].canvasHeight = bot.canvasHeight;
   }
 
   removePlayer(socket) {
@@ -115,7 +117,7 @@ class Game {
     });
 
     // Apply collisions, give players score for hitting bullets
-//    CollisionMap.applyCollisions(this.players, this.bullets);
+    CollisionMap.applyCollisions(this.players, this.bullets);
 
     // Check if any players are dead
     Object.keys(this.sockets).forEach(playerID => {
@@ -176,6 +178,7 @@ class Game {
   }
 
   createUpdate(player) {
+    const objUpdates = CollisionMap.getObjectUpdates(player);
     const nearbyPlayers = Object.values(this.players).filter(
                          // Just filter out the player itself, we need all players inf to make the map
       p => p !== player, //  && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
@@ -195,9 +198,9 @@ class Game {
     return {
       t: Date.now(),
       me: player.serializeForUpdate(),
-      others: nearbyPlayers.map(p => p.serializeForUpdate()),
-      mybullets: myNearbyBullets.map(b => b.serializeForUpdate()),
-      otherbullets: otherNearbyBullets.map(b => b.serializeForUpdate()),
+      others: objUpdates.nearbyPlayers.map(p => p.serializeForUpdate()),
+      mybullets: objUpdates.myNearbyBullets.map(b => b.serializeForUpdate()),
+      otherbullets: objUpdates.otherNearbyBullets.map(b => b.serializeForUpdate()),
       smallmap: smallmap,
       leaderboard,
     };

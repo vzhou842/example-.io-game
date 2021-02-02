@@ -7,6 +7,7 @@ class Bullet extends ObjectClass {
     super(shortid(), x, y, dir, Constants.BULLET_SPEED);
     this.parentID = parentID;
     this.liveTime = 5; // 5 seconds
+    this.type = 10;
   }
 
   // Returns true if the bullet should be destroyed

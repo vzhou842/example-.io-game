@@ -1,6 +1,7 @@
 const ObjectClass = require('./object');
 const Bullet = require('./bullet');
 const Constants = require('../shared/constants');
+const CollisionMap = require('./collisions');
 
 // 0: still
 // 1: right, 2: upright, 3: up,   4: upleft 
@@ -27,6 +28,7 @@ class Player extends ObjectClass {
     this.canvasWidth = Constants.MAP_SIZE / 4;
     this.canvasHeight = Constants.MAP_SIZE / 4;
     this.collisionCooldown = Constants.PLAYER_COLLISION_COOLDOWN;
+    this.type = 20;
   }
 
   restart() {
@@ -54,6 +56,8 @@ class Player extends ObjectClass {
     // Make sure the player stays in bounds
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
     this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
+ 
+    CollisionMap.updateObject(this);
 
     this.hp_recover -= dt;
     if (this.hp_recover <= 0) {
