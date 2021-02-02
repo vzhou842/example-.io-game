@@ -65,6 +65,9 @@ class Robot {
 
     // tell game this bot wants to move
     this.player.move = this.move
+
+    // 20% of bots not fire
+    if (Math.random() < 0.2) this.player.toggle('e');
   }
 }
 

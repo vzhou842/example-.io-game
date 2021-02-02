@@ -29,6 +29,11 @@ class Object {
     CollisionMap.updateObject(this);
   }
 
+  collision(obj) {
+    // do nothing
+    return 0;
+  }
+
   remove() {
     CollisionMap.removeObject(this);
   }

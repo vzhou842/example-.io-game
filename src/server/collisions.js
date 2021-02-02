@@ -77,13 +77,77 @@ function updateObject(obj) {
 function applyCollisions2() {
   for (let x = 0; x <= objectMapMaxIndex; x++) {
     for (let y = 0; y <= objectMapMaxIndex; y++) {
-      objectMap[x][y] = [0];
+      let objs1 = objectMap[x][y];
+      if (objs1[0] < 1) continue;
+
+      applyCollisions2_Obj1(objs1);
+
+      if (x < objectMapMaxIndex) applyCollisions2_Obj1(objs1, objectMap[x+1][y]);
+
+      if (y < objectMapMaxIndex) {
+        if (x > 0) applyCollisions2_Obj1(objs1, objectMap[x-1][y+1]);
+
+        applyCollisions2_Obj1(objs1, objectMap[x][y+1]);
+
+        if (x < objectMapMaxIndex) applyCollisions2_Obj1(objs1, objectMap[x+1][y+1]);
+      }      
     }
   }
 }
 
+function applyCollisions2_Obj1(objs) {
+  let i = 1;
+  while (i <= objs[0]) {
+    let j = i + 1;
+    let iremoved = false;
+    while (j <= objs[0]) {
+      let ret = objs[i].collision(objs[j]);
+      if (ret & 0b01) {
+        // objs[j] is removed
+        objs[j].remove(); // please note that objs[0] is updated
+      } else {
+        j++; // next please
+      }
+      if (ret & 0b10) {
+        // objs[i] is removed
+        objs[i].remove(); // please note that objs[0] is updated
+        iremoved = true;
+        break;
+      }
+    }
+    if (!iremoved) i++;
+  }
+}
 
-// Returns an array of bullets to be destroyed.
+function applyCollisions2_Obj2(objs1, objs2) {
+
+  if (objs2[0] <= 0) return;
+
+  let i = 1;
+  while (i <= objs1[0]) {
+    let j = 1;
+    let iremoved = false;
+    while (j <= objs2[0]) {
+      let ret = objs1[i].collision(objs2[j]);
+      if (ret & 0b01) {
+        // objs[j] is removed
+        objs2[j].remove(); // please note that objs[0] is updated
+      } else {
+        j++; // next please
+      }
+      if (ret & 0b10) {
+        // objs[i] is removed
+        objs1[i].remove(); // please note that objs[0] is updated
+        iremoved = true;
+        break;
+      }
+    }
+    if (!iremoved) i++;
+  }
+}
+
+
+// Apply collision
 function applyCollisions(playersObj, bulletsObj) {
 
   let players = Object.values(playersObj);
@@ -163,6 +227,16 @@ function applyCollisions(playersObj, bulletsObj) {
   }
 }
 
+function updateObjs(dt) {
+  for (let x = 0; x <= objectMapMaxIndex; x++) {
+    for (let y = 0; y <= objectMapMaxIndex; y++) {
+      for (let i = 1; i <= objectMap[x][y][0]; i++) {
+        objectMap[x][y][i].update(dt);
+      }
+    }
+  }
+}
+
 function getObjectUpdates(player) {
 
     const halfw = Math.round ( (Math.floor(player.canvasWidth / Constants.MAP_OBJ_GRID_SIZE) + 1) / 2);
@@ -176,11 +250,9 @@ function getObjectUpdates(player) {
     let nearbyPlayers = [];
     let otherNearbyBullets = [];
     let myNearbyBullets = [];
-    let c = 0;
     for (let x = mapX1; x <= mapX2; x++) {
       for (let y = mapY1; y <= mapY2; y++) {
         for (let i = 1; i <= objectMap[x][y][0]; i++) {
-          c++;
           const obj = objectMap[x][y][i];
           if (obj.getType() < 20) {
             // bullets and raw objects
@@ -212,6 +284,7 @@ module.exports = {
   addObject,
   updateObject,
   removeObject,
-  getObjectUpdates
+  getObjectUpdates,
+  updateObjs
 }
 

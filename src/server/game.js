@@ -7,7 +7,6 @@ class Game {
   constructor() {
     this.sockets = {};
     this.players = {};
-    this.bullets = {};
     this.leaderboard = [];
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
@@ -15,13 +14,16 @@ class Game {
 
     CollisionMap.init();
 
+//    Before optimization
 //    for (let i = 0; i < 500; i++) // would not start with collision
 //    for (let i = 0; i < 300; i++) // would not start with collision
 //    for (let i = 0; i < 200; i++) // can start after 1 min, very slow, unable to control at all
 //    for (let i = 0; i < 150; i++) // can start after half min, very lagging, control is very lagging and unable to play
 //    for (let i = 0; i < 100; i++) // normal performance on puma01
 //    for (let i = 0; i < 250; i++) // lagging even without collision detection. // need a better way to handle other parts as well
-    for (let i = 0; i < 100; i++) // normal performance on puma01
+
+//  after optimization, can run 500 bots with certain lagging occasionally
+    for (let i = 0; i < 400; i++) // normal performance on puma01
       this.addBot(new Robot(i));
   }
 
@@ -99,31 +101,18 @@ class Game {
     const dt = (now - this.lastUpdateTime) / 1000;
     this.lastUpdateTime = now;
 
-    // Update each bullet
-    Object.keys(this.bullets).forEach(id => {
-      if (this.bullets[id].update(dt)) {
-	this.bullets[id].remove();
-        delete this.bullets[id];
-      }
-    });
-
-    // Update each player
-    Object.keys(this.sockets).forEach(playerID => {
-      const player = this.players[playerID];
-      const newBullet = player.update(dt);
-      if (newBullet) {
-        this.bullets[newBullet.id] = newBullet;
-      }
-    });
+    // Update each bullet and player
+    CollisionMap.updateObjs(dt);
 
     // Apply collisions, give players score for hitting bullets
-    CollisionMap.applyCollisions(this.players, this.bullets);
+    //CollisionMap.applyCollisions(this.players, this.bullets);
+    CollisionMap.applyCollisions2();
 
     // Check if any players are dead
     Object.keys(this.sockets).forEach(playerID => {
       const socket = this.sockets[playerID];
       const player = this.players[playerID];
-      if (player.hp <= 0) {
+      if (player.hp <= 0 && player.username != "Larry") {
         socket.emit(Constants.MSG_TYPES.GAME_OVER);
         this.removePlayer(socket);
 
@@ -179,17 +168,6 @@ class Game {
 
   createUpdate(player) {
     const objUpdates = CollisionMap.getObjectUpdates(player);
-    const nearbyPlayers = Object.values(this.players).filter(
-                         // Just filter out the player itself, we need all players inf to make the map
-      p => p !== player, //  && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
-    );
-    const otherNearbyBullets = Object.values(this.bullets).filter(
- //     b => (b.distanceTo(player) <= Constants.MAP_SIZE / 2) && (b.parentID != player.id),
-      b => (b.parentID != player.id) && (Math.abs(b.x - player.x) < player.canvasWidth) && (Math.abs(b.y - player.y) < player.canvasHeight),
-    );
-    const myNearbyBullets = Object.values(this.bullets).filter(
-      b => (b.parentID == player.id) && (Math.abs(b.x - player.x) < player.canvasWidth) && (Math.abs(b.y - player.y) < player.canvasHeight),
-    );
 
     const smallmap = Object.values(this.players).map(p => ({x:p.x, y:p.y}));
 
