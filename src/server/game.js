@@ -115,7 +115,7 @@ class Game {
     });
 
     // Apply collisions, give players score for hitting bullets
-    CollisionMap.applyCollisions(this.players, this.bullets);
+//    CollisionMap.applyCollisions(this.players, this.bullets);
 
     // Check if any players are dead
     Object.keys(this.sockets).forEach(playerID => {
