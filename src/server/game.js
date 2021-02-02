@@ -121,11 +121,10 @@ class Game {
 
     // Send a game update to each player every other time
     if (this.shouldSendUpdate) {
-      const leaderboard = this.getLeaderboard();
       Object.keys(this.sockets).forEach(playerID => {
         const socket = this.sockets[playerID];
         const player = this.players[playerID];
-        socket.emit(Constants.MSG_TYPES.GAME_UPDATE, this.createUpdate(player, leaderboard));
+        socket.emit(Constants.MSG_TYPES.GAME_UPDATE, this.createUpdate(player));
       });
       this.shouldSendUpdate = false;
     } else {
@@ -133,14 +132,33 @@ class Game {
     }
   }
 
-  getLeaderboard() {
-    return Object.values(this.players)
-      .sort((p1, p2) => p2.score - p1.score)
-      .slice(0, 5)
-      .map(p => ({ username: p.username, score: Math.round(p.score) }));
+  getLeaderboard(me) {
+    const playerlist = Object.values(this.players)
+      .sort((p1, p2) => p2.score - p1.score);
+//      .slice(0, 5)
+//      .map(p => ({ username: p.username, score: Math.round(p.score) }));
+
+   let leaderboard = [];
+   let place = 0;
+   let num = 0;
+   let meinlist = false;
+
+   while (num < 6 && place < playerlist.length) {
+     let p = playerlist[place++];
+     if (num < 5 || meinlist) {
+       leaderboard.push({place: place, username: p.username, score: Math.round(p.score) });
+       if (me.id == p.id) meinlist = true;
+       num ++;
+     } else if (me.id == p.id) {
+       leaderboard.push({place: place, username: p.username, score: Math.round(p.score) });
+       num ++;
+     }
+   }
+
+   return leaderboard;
   }
 
-  createUpdate(player, leaderboard) {
+  createUpdate(player) {
     const nearbyPlayers = Object.values(this.players).filter(
                          // Just filter out the player itself, we need all players inf to make the map
       p => p !== player, //  && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
@@ -152,6 +170,8 @@ class Game {
     const myNearbyBullets = this.bullets.filter(
       b => (b.parentID == player.id) && (Math.abs(b.x - player.x) < player.canvasWidth) && (Math.abs(b.y - player.y) < player.canvasHeight),
     );
+
+    const leaderboard = this.getLeaderboard(player);
 
     return {
       t: Date.now(),
