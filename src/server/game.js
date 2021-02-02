@@ -12,7 +12,7 @@ class Game {
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
 
-    for (let i = 0; i < 50; i++) 
+    for (let i = 0; i < 60; i++) 
       this.addBot(new Robot(i));
   }
 

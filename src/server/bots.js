@@ -10,7 +10,8 @@ class Robot {
                     "Deer", "Ship", "Loud", "Me!!!",       "PickMe", "Shooting", "Flagship", "Beer", "Glare", "Ocean", 
                     "Sky", "Runner", "Winer", "Shopper",   "Looking", "Better",  "High",     "Rachel", "Rain", "Beauty", "Iam51",];
     this.id = "bot" + idx;
-    this.username = names[idx];
+    if (idx < 50) this.username = names[idx];
+           else   this.username = this.id;
     this.ms = (new Date()).getTime();
     this.player = null;
     this.move = "right";
