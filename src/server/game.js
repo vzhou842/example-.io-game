@@ -7,7 +7,7 @@ class Game {
   constructor() {
     this.sockets = {};
     this.players = {};
-    this.bullets = [];
+    this.bullets = {};
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
@@ -19,7 +19,7 @@ class Game {
 //    for (let i = 0; i < 200; i++) // can start after 1 min, very slow, unable to control at all
 //    for (let i = 0; i < 150; i++) // can start after half min, very lagging, control is very lagging and unable to play
 //    for (let i = 0; i < 100; i++) // normal performance on puma01
-    for (let i = 0; i < 3; i++) // normal performance on puma01
+    for (let i = 0; i < 50; i++) // normal performance on puma01
       this.addBot(new Robot(i));
   }
 
@@ -92,27 +92,24 @@ class Game {
     this.lastUpdateTime = now;
 
     // Update each bullet
-    const bulletsToRemove = [];
-    this.bullets.forEach(bullet => {
-      if (bullet.update(dt)) {
-        // Destroy this bullet
-        bulletsToRemove.push(bullet);
-        bullet.remove();
+    Object.keys(this.bullets).forEach(id => {
+      if (this.bullets[id].update(dt)) {
+	this.bullets[id].remove();
+        delete this.bullets[id];
       }
     });
-    this.bullets = this.bullets.filter(bullet => !bulletsToRemove.includes(bullet));
 
     // Update each player
     Object.keys(this.sockets).forEach(playerID => {
       const player = this.players[playerID];
       const newBullet = player.update(dt);
       if (newBullet) {
-        this.bullets.push(newBullet);
+        this.bullets[newBullet.id] = newBullet;
       }
     });
 
     // Apply collisions, give players score for hitting bullets
-    CollisionMap.applyCollisions(this.players, this.bullets);
+//    CollisionMap.applyCollisions(this.players, this.bullets);
 
     // Check if any players are dead
     Object.keys(this.sockets).forEach(playerID => {
@@ -172,11 +169,11 @@ class Game {
                          // Just filter out the player itself, we need all players inf to make the map
       p => p !== player, //  && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
     );
-    const otherNearbyBullets = this.bullets.filter(
+    const otherNearbyBullets = Object.values(this.bullets).filter(
  //     b => (b.distanceTo(player) <= Constants.MAP_SIZE / 2) && (b.parentID != player.id),
       b => (b.parentID != player.id) && (Math.abs(b.x - player.x) < player.canvasWidth) && (Math.abs(b.y - player.y) < player.canvasHeight),
     );
-    const myNearbyBullets = this.bullets.filter(
+    const myNearbyBullets = Object.values(this.bullets).filter(
       b => (b.parentID == player.id) && (Math.abs(b.x - player.x) < player.canvasWidth) && (Math.abs(b.y - player.y) < player.canvasHeight),
     );
 
