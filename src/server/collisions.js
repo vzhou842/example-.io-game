@@ -84,9 +84,10 @@ function applyCollisions2() {
 
 
 // Returns an array of bullets to be destroyed.
-function applyCollisions(players, bullets) {
+function applyCollisions(playersObj, bulletsObj) {
 
-  let players_arr = Object.values(players);
+  let players = Object.values(playersObj);
+  let bullets = Object.values(bulletsObj);
   let i = 0;
   while (i < bullets.length) {
 
@@ -114,6 +115,8 @@ function applyCollisions(players, bullets) {
         }
         bullet.remove();
         bullet2.remove();
+        delete bulletsObj[bullet.id];
+        delete bulletsObj[bullet2.id];
         bulletCollision = true;
         break;
       }
@@ -121,14 +124,14 @@ function applyCollisions(players, bullets) {
 
     if (bulletCollision) continue;
 
-    for (let j = 0; j < players_arr.length; j++) {
-      const player = players_arr[j];
+    for (let j = 0; j < players.length; j++) {
+      const player = players[j];
       if (
         bullet.parentID !== player.id &&
         player.distanceTo(bullet) <= Constants.PLAYER_RADIUS + Constants.BULLET_RADIUS
       ) {
-        if (players[bullet.parentID]) {
-          players[bullet.parentID].onDealtDamage();
+        if (playersObj[bullet.parentID]) {
+          playersObj[bullet.parentID].onDealtDamage();
         }
 	if (i == bullets.length - 1) {
           bullets.pop();
@@ -138,6 +141,7 @@ function applyCollisions(players, bullets) {
         player.takeBulletDamage();
         bulletCollision = true;
         bullet.remove();
+        delete bulletsObj[bullet.id];
         break;
       }
     }
@@ -145,12 +149,12 @@ function applyCollisions(players, bullets) {
     if (!bulletCollision) i++;
   }
 
-  for (let i = 0; i < players_arr.length; i++) {
+  for (let i = 0; i < players.length; i++) {
     // Look for player collision
-    for (let j = 0; j < players_arr.length; j++) {
+    for (let j = 0; j < players.length; j++) {
       if (i == j) continue;
-      const p1 = players_arr[i];
-      const p2 = players_arr[j];
+      const p1 = players[i];
+      const p2 = players[j];
       if (p1.distanceTo(p2) <= Constants.PLAYER_RADIUS*2) {
         p1.takeCollisionDamage();
         p2.takeCollisionDamage();
