@@ -1,3 +1,5 @@
+const CollisionMap = require('./collisions');
+
 class Object {
   constructor(id, x, y, dir, speed, radius) {
     this.id = id;
@@ -6,11 +8,23 @@ class Object {
     this.direction = dir;
     this.speed = speed;
     this.radius = radius;
+
+    this.mapX = -1;
+    this.mapY = -1;
+    this.mapPos = -1;
+
+    CollisionMap.addObject(this);
   }
 
   update(dt) {
     this.x += dt * this.speed * Math.sin(this.direction);
     this.y -= dt * this.speed * Math.cos(this.direction);
+
+    CollisionMap.updateObject(this);
+  }
+
+  remove() {
+    CollisionMap.removeObject(this);
   }
 
   distanceTo(object) {

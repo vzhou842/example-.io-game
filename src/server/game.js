@@ -1,7 +1,7 @@
 const Constants = require('../shared/constants');
 const Player = require('./player');
 const Robot = require('./bots');
-const applyCollisions = require('./collisions');
+const CollisionMap = require('./collisions');
 
 class Game {
   constructor() {
@@ -12,7 +12,14 @@ class Game {
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
 
-    for (let i = 0; i < 100; i++) 
+    CollisionMap.init();
+
+//    for (let i = 0; i < 500; i++) // would not start
+//    for (let i = 0; i < 300; i++) // would not start
+//    for (let i = 0; i < 200; i++) // can start after 1 min, very slow, unable to control at all
+//    for (let i = 0; i < 150; i++) // can start after half min, very lagging, control is very lagging and unable to play
+//    for (let i = 0; i < 100; i++) // normal performance on puma01
+    for (let i = 0; i < 3; i++) // normal performance on puma01
       this.addBot(new Robot(i));
   }
 
@@ -43,6 +50,7 @@ class Game {
   }
 
   removePlayer(socket) {
+    this.players[socket.id].remove();
     delete this.sockets[socket.id];
     delete this.players[socket.id];
   }
@@ -89,6 +97,7 @@ class Game {
       if (bullet.update(dt)) {
         // Destroy this bullet
         bulletsToRemove.push(bullet);
+        bullet.remove();
       }
     });
     this.bullets = this.bullets.filter(bullet => !bulletsToRemove.includes(bullet));
@@ -103,7 +112,7 @@ class Game {
     });
 
     // Apply collisions, give players score for hitting bullets
-    applyCollisions(this.players, this.bullets);
+    CollisionMap.applyCollisions(this.players, this.bullets);
 
     // Check if any players are dead
     Object.keys(this.sockets).forEach(playerID => {

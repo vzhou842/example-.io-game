@@ -1,5 +1,88 @@
 const Constants = require('../shared/constants');
 
+let objectMap = []
+let objectMapMaxIndex = Math.floor( (Constants.MAP_SIZE - 1) / Constants.MAP_OBJ_GRID_SIZE);
+function init() {
+  for (let x = 0; x <= objectMapMaxIndex; x++) {
+    objectMap[x] = [];
+    for (let y = 0; y <= objectMapMaxIndex; y++) {
+      objectMap[x][y] = [0];
+    }
+  }
+}
+
+// expect obj has 5 attributes:
+// (x, y): obj's position in the game map
+// (mapX, mapY): obj's position in the objectMap
+// mapPos: the index of the obj in (mapX, mapY)
+function addObject(obj) {
+  obj.mapX = Math.max(0, Math.min(objectMapMaxIndex, Math.floor(obj.x / Constants.MAP_OBJ_GRID_SIZE)));
+  obj.mapY = Math.max(0, Math.min(objectMapMaxIndex, Math.floor(obj.y / Constants.MAP_OBJ_GRID_SIZE)));
+  objectMap[obj.mapX][obj.mapY][0]++;
+  obj.mapPos = objectMap[obj.mapX][obj.mapY][0];
+  objectMap[obj.mapX][obj.mapY].push(obj);
+
+//  console.log("add obj:" + obj.id + " " + obj.mapPos + " " + objectMap[obj.mapX][obj.mapY][obj.mapPos]);
+}
+
+function removeObject(obj) {
+
+//  if (obj.mapX < 0 || obj.mapX > objectMapMaxIndex
+//	|| obj.mapY < 0 || obj.mapY > objectMapMaxIndex 
+//	|| obj.mapPos < 1 || 
+  if (objectMap[obj.mapX][obj.mapY][obj.mapPos] != obj) {
+    console.log("Error: an object(id:" + obj.id + ") to be removed is not in the object map!");
+    return;
+  }
+//  console.log("An object(id:" + obj.id + ") is removed");
+
+  if (obj.mapPos == objectMap[obj.mapX][obj.mapY][0]) {
+    objectMap[obj.mapX][obj.mapY].pop();
+  } else {
+    const mvObj = objectMap[obj.mapX][obj.mapY].pop();
+    objectMap[obj.mapX][obj.mapY][obj.mapPos] = mvObj;
+    mvObj.mapPos = obj.mapPos;
+  }
+  objectMap[obj.mapX][obj.mapY][0]--;
+}
+
+function updateObject(obj) {
+  let mapX = Math.max(0, Math.min(objectMapMaxIndex, Math.floor(obj.x / Constants.MAP_OBJ_GRID_SIZE)));
+  let mapY = Math.max(0, Math.min(objectMapMaxIndex, Math.floor(obj.y / Constants.MAP_OBJ_GRID_SIZE)));
+
+  // no change
+  if (obj.mapX == mapX && obj.mapY == mapY) return;
+
+  if (objectMap[obj.mapX][obj.mapY][obj.mapPos] != obj) {
+    console.log("Error: an object(id:" + obj.id + ") to be updated is not in the object map!");
+    return;
+  }
+
+  if (obj.mapPos == objectMap[obj.mapX][obj.mapY][0]) {
+    objectMap[obj.mapX][obj.mapY].pop();
+  } else {
+    const mvObj = objectMap[obj.mapX][obj.mapY].pop();
+    objectMap[obj.mapX][obj.mapY][obj.mapPos] = mvObj;
+    mvObj.mapPos = obj.mapPos;
+  }
+  objectMap[obj.mapX][obj.mapY][0]--;
+
+  obj.mapX = mapX;
+  obj.mapY = mapY;
+  objectMap[obj.mapX][obj.mapY][0]++;
+  obj.mapPos = objectMap[obj.mapX][obj.mapY][0];
+  objectMap[obj.mapX][obj.mapY].push(obj);
+}
+
+function applyCollisions2() {
+  for (let x = 0; x <= objectMapMaxIndex; x++) {
+    for (let y = 0; y <= objectMapMaxIndex; y++) {
+      objectMap[x][y] = [0];
+    }
+  }
+}
+
+
 // Returns an array of bullets to be destroyed.
 function applyCollisions(players, bullets) {
 
@@ -29,6 +112,8 @@ function applyCollisions(players, bullets) {
         } else {
           bullets[i] = bullets.pop();
         }
+        bullet.remove();
+        bullet2.remove();
         bulletCollision = true;
         break;
       }
@@ -52,6 +137,7 @@ function applyCollisions(players, bullets) {
         }
         player.takeBulletDamage();
         bulletCollision = true;
+        bullet.remove();
         break;
       }
     }
@@ -73,4 +159,14 @@ function applyCollisions(players, bullets) {
   }
 }
 
-module.exports = applyCollisions;
+
+
+module.exports = {
+  init, 
+  applyCollisions,
+  applyCollisions2,
+  addObject,
+  updateObject,
+  removeObject
+}
+
