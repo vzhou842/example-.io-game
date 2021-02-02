@@ -14,12 +14,13 @@ class Game {
 
     CollisionMap.init();
 
-//    for (let i = 0; i < 500; i++) // would not start
-//    for (let i = 0; i < 300; i++) // would not start
+//    for (let i = 0; i < 500; i++) // would not start with collision
+//    for (let i = 0; i < 300; i++) // would not start with collision
 //    for (let i = 0; i < 200; i++) // can start after 1 min, very slow, unable to control at all
 //    for (let i = 0; i < 150; i++) // can start after half min, very lagging, control is very lagging and unable to play
 //    for (let i = 0; i < 100; i++) // normal performance on puma01
-    for (let i = 0; i < 3; i++) // normal performance on puma01
+//    for (let i = 0; i < 250; i++) // lagging even without collision detection. // need a better way to handle other parts as well
+    for (let i = 0; i < 100; i++) // normal performance on puma01
       this.addBot(new Robot(i));
   }
 
