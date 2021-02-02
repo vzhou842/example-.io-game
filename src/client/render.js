@@ -49,7 +49,7 @@ function render() {
     firstRenderUpdate = false;
   }
 
-  const { me, others, mybullets, otherbullets } = getCurrentState();
+  const { me, others, mybullets, otherbullets, smallmap} = getCurrentState();
   if (!me) {
     return;
   }
@@ -109,7 +109,7 @@ function render() {
   renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
 
-  renderSmallMap(me, others);
+  renderSmallMap(me, smallmap);
 }
 
 function renderSmallMap(me, others) {
@@ -137,19 +137,16 @@ function renderSmallMap(me, others) {
 
   context.fillStyle = 'white';
 //  console.log(others.length);
-//  var l = 0;
 
   others.forEach( p => {
-    const {x, y, d} = p;
+    const {x, y} = p;
     context.fillRect(
       canvasX + x * 100 / MAP_SIZE,
       canvasY + y * 100 / MAP_SIZE,
       2,
       2,
     );
-//    l++;
   });
-//  console.log("new log " + l);
 }
 
 function renderBackground(x, y) {

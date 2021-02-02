@@ -69,6 +69,7 @@ export function getCurrentState() {
       others: interpolateObjectArray(baseUpdate.others, next.others, ratio),
       mybullets: interpolateObjectArray(baseUpdate.mybullets, next.mybullets, ratio),
       otherbullets: interpolateObjectArray(baseUpdate.otherbullets, next.otherbullets, ratio),
+      smallmap: baseUpdate.smallmap, // no need to interpolate the small map, it is too small to notice
     };
   }
 }

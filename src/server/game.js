@@ -8,6 +8,7 @@ class Game {
     this.sockets = {};
     this.players = {};
     this.bullets = {};
+    this.leaderboard = [];
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
@@ -114,7 +115,7 @@ class Game {
     });
 
     // Apply collisions, give players score for hitting bullets
-//    CollisionMap.applyCollisions(this.players, this.bullets);
+    CollisionMap.applyCollisions(this.players, this.bullets);
 
     // Check if any players are dead
     Object.keys(this.sockets).forEach(playerID => {
@@ -132,6 +133,7 @@ class Game {
 
     // Send a game update to each player every other time
     if (this.shouldSendUpdate) {
+      this.prepareLeaderboard();
       Object.keys(this.sockets).forEach(playerID => {
         const socket = this.sockets[playerID];
         const player = this.players[playerID];
@@ -143,30 +145,34 @@ class Game {
     }
   }
 
-  getLeaderboard(me) {
+  prepareLeaderboard() {
     const playerlist = Object.values(this.players)
       .sort((p1, p2) => p2.score - p1.score);
 //      .slice(0, 5)
 //      .map(p => ({ username: p.username, score: Math.round(p.score) }));
 
-   let leaderboard = [];
-   let place = 0;
-   let num = 0;
-   let meinlist = false;
+    this.leaderboard = [];
+    for (let i = 0; i < 6 && i < playerlist.length; i++) {
+      const p = playerlist[i];
+      this.leaderboard.push({id:p.id, place: i + 1, username: p.username, score: Math.round(p.score) });
+    }
 
-   while (num < 6 && place < playerlist.length) {
-     let p = playerlist[place++];
-     if (num < 5 || meinlist) {
-       leaderboard.push({place: place, username: p.username, score: Math.round(p.score) });
-       if (me.id == p.id) meinlist = true;
-       num ++;
-     } else if (me.id == p.id) {
-       leaderboard.push({place: place, username: p.username, score: Math.round(p.score) });
-       num ++;
-     }
+    for (let i = 0; i < playerlist.length; i++) {
+      playerlist[i].place = i;
+    }
+  }
+
+  getLeaderboard(me) {
+
+   for (let i = 0; i < this.leaderboard.length; i++) if (this.leaderboard[i].id == me.id) {
+     // me is in the leaderboard, including the case there are less than 7 players
+     return this.leaderboard.map( p => ({place: p.place, username: p.username, score: p.score}));
    }
 
-   return leaderboard;
+   let lb = this.leaderboard.map( p => ({place: p.place, username: p.username, score: p.score}));
+   lb[5] = {place:me.place + 1, username: me.username, score: Math.round(me.score)};
+
+   return lb;
   }
 
   createUpdate(player) {
@@ -182,6 +188,8 @@ class Game {
       b => (b.parentID == player.id) && (Math.abs(b.x - player.x) < player.canvasWidth) && (Math.abs(b.y - player.y) < player.canvasHeight),
     );
 
+    const smallmap = Object.values(this.players).map(p => ({x:p.x, y:p.y}));
+
     const leaderboard = this.getLeaderboard(player);
 
     return {
@@ -190,6 +198,7 @@ class Game {
       others: nearbyPlayers.map(p => p.serializeForUpdate()),
       mybullets: myNearbyBullets.map(b => b.serializeForUpdate()),
       otherbullets: otherNearbyBullets.map(b => b.serializeForUpdate()),
+      smallmap: smallmap,
       leaderboard,
     };
   }
