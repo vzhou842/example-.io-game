@@ -116,6 +116,8 @@ function renderMainMenu() {
   renderBackground(x, y);
 }
 
+// Note: you should use requestAnimationFrame() here instead. setInterval works fine,
+// but requestAnimationFrame() is specifically made for render loops like this.
 let renderInterval = setInterval(renderMainMenu, 1000 / 60);
 
 // Replaces main menu rendering with game rendering.
