@@ -55,6 +55,11 @@ class Game {
     const dt = (now - this.lastUpdateTime) / 1000;
     this.lastUpdateTime = now;
 
+    // Debug logging
+    if (Math.random() < 1 / 108000) {
+      console.log('update() invoked', now);
+    }
+
     // Update each bullet
     const bulletsToRemove = [];
     this.bullets.forEach(bullet => {
