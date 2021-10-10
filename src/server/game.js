@@ -34,7 +34,6 @@ class Game {
 
   handleInputPos(socket, pos) {
     if (this.players[socket.id]) {
-      console.log('set pos');
       this.players[socket.id].setPos(pos);
     }
   }
