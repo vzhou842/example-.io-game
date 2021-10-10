@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint --cache --ext .js,.jsx src/",
-    "develop": "cross-env NODE_ENV=development node src/server/server.js",
+    "develop": "cross-env NODE_ENV=development nodemon src/server/server.js",
     "start": "cross-env NODE_ENV=production node src/server/server.js",
     "test": "jest"
   },
@@ -36,6 +36,7 @@
     "eslint-plugin-jest": "^23.7.0",
     "jest": "^25.1.0",
     "mini-css-extract-plugin": "^0.6.0",
+    "nodemon": "^2.0.13",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
