@@ -32,6 +32,13 @@ class Game {
     }
   }
 
+  handleInputPos(socket, pos) {
+    if (this.players[socket.id]) {
+      console.log('set pos');
+      this.players[socket.id].setPos(pos);
+    }
+  }
+
   update() {
     // Calculate time elapsed
     const now = Date.now();
@@ -39,14 +46,14 @@ class Game {
     this.lastUpdateTime = now;
 
     // Update each bullet
-    const bulletsToRemove = [];
-    this.bullets.forEach(bullet => {
-      if (bullet.update(dt)) {
-        // Destroy this bullet
-        bulletsToRemove.push(bullet);
-      }
-    });
-    this.bullets = this.bullets.filter(bullet => !bulletsToRemove.includes(bullet));
+    // const bulletsToRemove = [];
+    // this.bullets.forEach(bullet => {
+    //   if (bullet.update(dt)) {
+    //     // Destroy this bullet
+    //     bulletsToRemove.push(bullet);
+    //   }
+    // });
+    // this.bullets = this.bullets.filter(bullet => !bulletsToRemove.includes(bullet));
 
     // Update each player
     Object.keys(this.sockets).forEach(playerID => {
@@ -58,23 +65,23 @@ class Game {
     });
 
     // Apply collisions, give players score for hitting bullets
-    const destroyedBullets = applyCollisions(Object.values(this.players), this.bullets);
-    destroyedBullets.forEach(b => {
-      if (this.players[b.parentID]) {
-        this.players[b.parentID].onDealtDamage();
-      }
-    });
-    this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
+    // const destroyedBullets = applyCollisions(Object.values(this.players), this.bullets);
+    // destroyedBullets.forEach(b => {
+    //   if (this.players[b.parentID]) {
+    //     this.players[b.parentID].onDealtDamage();
+    //   }
+    // });
+    // this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
 
     // Check if any players are dead
-    Object.keys(this.sockets).forEach(playerID => {
-      const socket = this.sockets[playerID];
-      const player = this.players[playerID];
-      if (player.hp <= 0) {
-        socket.emit(Constants.MSG_TYPES.GAME_OVER);
-        this.removePlayer(socket);
-      }
-    });
+    // Object.keys(this.sockets).forEach(playerID => {
+    //   const socket = this.sockets[playerID];
+    //   const player = this.players[playerID];
+    //   if (player.hp <= 0) {
+    //     socket.emit(Constants.MSG_TYPES.GAME_OVER);
+    //     this.removePlayer(socket);
+    //   }
+    // });
 
     // Send a game update to each player every other time
     if (this.shouldSendUpdate) {

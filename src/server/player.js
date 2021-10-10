@@ -13,7 +13,7 @@ class Player extends ObjectClass {
 
   // Returns a newly created bullet, or null.
   update(dt) {
-    super.update(dt);
+    // super.update(dt);
 
     // Update score
     this.score += dt * Constants.SCORE_PER_SECOND;

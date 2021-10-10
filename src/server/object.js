@@ -22,6 +22,11 @@ class Object {
     this.direction = dir;
   }
 
+  setPos(pos) {
+    this.x = pos.x;
+    this.y = pos.y;
+  }
+
   serializeForUpdate() {
     return {
       id: this.id,

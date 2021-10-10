@@ -38,7 +38,7 @@ function render() {
   context.strokeRect(canvas.width / 2 - me.x, canvas.height / 2 - me.y, MAP_SIZE, MAP_SIZE);
 
   // Draw all bullets
-  bullets.forEach(renderBullet.bind(null, me));
+  // bullets.forEach(renderBullet.bind(null, me));
 
   // Draw all players
   renderPlayer(me, me);

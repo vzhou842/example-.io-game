@@ -37,3 +37,7 @@ export const play = username => {
 export const updateDirection = throttle(20, dir => {
   socket.emit(Constants.MSG_TYPES.INPUT, dir);
 });
+
+export const updatePos = throttle(20, pos => {
+  socket.emit(Constants.MSG_TYPES.INPUT_POS, pos);
+});
