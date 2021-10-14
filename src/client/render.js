@@ -30,12 +30,12 @@ function render() {
   }
 
   // Draw background
-  renderBackground(me.x, me.y);
+  renderBackground(0, 0);
 
   // Draw boundaries
-  context.strokeStyle = 'black';
-  context.lineWidth = 1;
-  context.strokeRect(canvas.width / 2 - me.x, canvas.height / 2 - me.y, MAP_SIZE, MAP_SIZE);
+  // context.strokeStyle = 'black';
+  // context.lineWidth = 1;
+  // context.strokeRect(canvas.width / 2 - me.x, canvas.height / 2 - me.y, MAP_SIZE, MAP_SIZE);
 
   // Draw all bullets
   // bullets.forEach(renderBullet.bind(null, me));
