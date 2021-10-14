@@ -65,8 +65,8 @@ function renderBackground(x, y) {
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
   const { x, y, direction } = player;
-  const canvasX = canvas.width / 2 + x - me.x;
-  const canvasY = canvas.height / 2 + y - me.y;
+  const canvasX = x;
+  const canvasY = y;
 
   // Draw ship
   context.save();
