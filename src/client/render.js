@@ -23,26 +23,29 @@ function setCanvasDimensions() {
 
 window.addEventListener('resize', debounce(40, setCanvasDimensions));
 
+let animationFrameRequestId;
+
 function render() {
   const { me, others, bullets } = getCurrentState();
-  if (!me) {
-    return;
+  if (me) {
+    // Draw background
+    renderBackground(me.x, me.y);
+
+    // Draw boundaries
+    context.strokeStyle = 'black';
+    context.lineWidth = 1;
+    context.strokeRect(canvas.width / 2 - me.x, canvas.height / 2 - me.y, MAP_SIZE, MAP_SIZE);
+
+    // Draw all bullets
+    bullets.forEach(renderBullet.bind(null, me));
+
+    // Draw all players
+    renderPlayer(me, me);
+    others.forEach(renderPlayer.bind(null, me));
   }
 
-  // Draw background
-  renderBackground(me.x, me.y);
-
-  // Draw boundaries
-  context.strokeStyle = 'black';
-  context.lineWidth = 1;
-  context.strokeRect(canvas.width / 2 - me.x, canvas.height / 2 - me.y, MAP_SIZE, MAP_SIZE);
-
-  // Draw all bullets
-  bullets.forEach(renderBullet.bind(null, me));
-
-  // Draw all players
-  renderPlayer(me, me);
-  others.forEach(renderPlayer.bind(null, me));
+  // Rerun this render function on the next frame
+  animationFrameRequestId = requestAnimationFrame(render);
 }
 
 function renderBackground(x, y) {
@@ -114,20 +117,21 @@ function renderMainMenu() {
   const x = MAP_SIZE / 2 + 800 * Math.cos(t);
   const y = MAP_SIZE / 2 + 800 * Math.sin(t);
   renderBackground(x, y);
+
+  // Rerun this render function on the next frame
+  animationFrameRequestId = requestAnimationFrame(renderMainMenu);
 }
 
-// Note: you should use requestAnimationFrame() here instead. setInterval works fine,
-// but requestAnimationFrame() is specifically made for render loops like this.
-let renderInterval = setInterval(renderMainMenu, 1000 / 60);
+animationFrameRequestId = requestAnimationFrame(renderMainMenu);
 
 // Replaces main menu rendering with game rendering.
 export function startRendering() {
-  clearInterval(renderInterval);
-  renderInterval = setInterval(render, 1000 / 60);
+  cancelAnimationFrame(animationFrameRequestId);
+  animationFrameRequestId = requestAnimationFrame(render);
 }
 
 // Replaces game rendering with main menu rendering.
 export function stopRendering() {
-  clearInterval(renderInterval);
-  renderInterval = setInterval(renderMainMenu, 1000 / 60);
+  cancelAnimationFrame(animationFrameRequestId);
+  animationFrameRequestId = requestAnimationFrame(renderMainMenu);
 }
