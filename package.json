@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.3",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "lodash": "^4.17.21",
     "shortid": "^2.2.16",
     "socket.io": "^4.4.1",
@@ -37,7 +37,7 @@
     "jest": "^25.1.0",
     "mini-css-extract-plugin": "^0.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.8",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^3.3.12",
     "webpack-merge": "^4.2.2"
   }
 }
