@@ -1,6 +1,5 @@
 const ASSET_NAMES = [
-  'ship.svg',
-  'bullet.svg',
+  'aid.svg'
 ];
 
 const assets = {};
@@ -22,3 +21,24 @@ function downloadAsset(assetName) {
 export const downloadAssets = () => downloadPromise;
 
 export const getAsset = assetName => assets[assetName];
+
+
+const mfers = {};
+
+export const getmfer = (id) => {
+  if (typeof mfers[id] === 'undefined') {
+    mfers[id] = {
+      loaded: false,
+    }
+
+    const asset = new Image();
+    asset.onload = () => {
+      console.log(`Downloaded ${id}`);
+      mfers[id]['src'] = asset;
+      mfers[id]['loaded'] = true;
+    };
+    asset.src = `/assets/mfers/${id}.png`;
+  }
+
+  return mfers[id];
+}

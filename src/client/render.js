@@ -1,7 +1,7 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#5-client-rendering
 import { debounce } from 'throttle-debounce';
-import { getAsset } from './assets';
+import { getAsset, getmfer } from './assets';
 import { getCurrentState } from './state';
 
 const Constants = require('../shared/constants');
@@ -26,14 +26,15 @@ window.addEventListener('resize', debounce(40, setCanvasDimensions));
 let animationFrameRequestId;
 
 function render() {
-  const { me, others, bullets } = getCurrentState();
+  const { me, others, bullets, aidkits } = getCurrentState();
+
   if (me) {
     // Draw background
     renderBackground(me.x, me.y);
 
     // Draw boundaries
     context.strokeStyle = 'black';
-    context.lineWidth = 1;
+    context.lineWidth = 5;
     context.strokeRect(canvas.width / 2 - me.x, canvas.height / 2 - me.y, MAP_SIZE, MAP_SIZE);
 
     // Draw all bullets
@@ -42,6 +43,13 @@ function render() {
     // Draw all players
     renderPlayer(me, me);
     others.forEach(renderPlayer.bind(null, me));
+
+    // Draw first aid kits
+    aidkits.forEach(renderAidKit.bind(null, me));
+    // aidkits.forEach(aidkit => {
+    //   //console.log(aidkit)
+    //   renderAid(aidkit)
+    // });
   }
 
   // Rerun this render function on the next frame
@@ -60,28 +68,41 @@ function renderBackground(x, y) {
     MAP_SIZE / 2,
   );
   backgroundGradient.addColorStop(0, 'black');
-  backgroundGradient.addColorStop(1, 'gray');
+  backgroundGradient.addColorStop(1, '#F3B87A');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
-  const { x, y, direction } = player;
+  const { x, y, tokenId, direction } = player;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
   // Draw ship
   context.save();
+  context.lineWidth = 2;
+
   context.translate(canvasX, canvasY);
-  context.rotate(direction);
-  context.drawImage(
-    getAsset('ship.svg'),
-    -PLAYER_RADIUS,
-    -PLAYER_RADIUS,
-    PLAYER_RADIUS * 2,
-    PLAYER_RADIUS * 2,
-  );
+  context.rotate(direction - 0.5*Math.PI);
+  
+  context.beginPath();
+  context.arc(0, 0, PLAYER_RADIUS, 0, 2 * Math.PI);
+  context.closePath();
+  context.stroke();
+  context.clip();
+    
+  const img = getmfer(tokenId);
+  if (img['loaded']) {
+    context.drawImage(
+      img['src'],
+      -PLAYER_RADIUS,
+      -PLAYER_RADIUS,
+      PLAYER_RADIUS * 2,
+      PLAYER_RADIUS * 2,
+    );
+  }
+  
   context.restore();
 
   // Draw health bar
@@ -103,12 +124,39 @@ function renderPlayer(me, player) {
 
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
+
+  context.fillStyle = '#FFF';
+
+  context.beginPath();
+  context.arc(
+    canvas.width / 2 + x - me.x,
+    canvas.height / 2 + y - me.y,
+    BULLET_RADIUS, 
+    0, 2 * Math.PI
+  );
+  context.closePath();
+  context.stroke();
+  context.fill();
+
+  // context.drawImage(
+  //   getAsset('bullet.svg'),
+  //   canvas.width / 2 + x - me.x - BULLET_RADIUS,
+  //   canvas.height / 2 + y - me.y - BULLET_RADIUS,
+  //   BULLET_RADIUS*2,
+  //   BULLET_RADIUS*2,
+  // );
+}
+
+function renderAidKit(me,aidkit) {
+  
+  const { x, y, hp } = aidkit;
+  
   context.drawImage(
-    getAsset('bullet.svg'),
-    canvas.width / 2 + x - me.x - BULLET_RADIUS,
-    canvas.height / 2 + y - me.y - BULLET_RADIUS,
-    BULLET_RADIUS * 2,
-    BULLET_RADIUS * 2,
+    getAsset('aid.svg'),
+    canvas.width / 2 + x - me.x,
+    canvas.height / 2 + y - me.y,
+    Constants.AID_KIT_RADIUS,
+    Constants.AID_KIT_RADIUS
   );
 }
 

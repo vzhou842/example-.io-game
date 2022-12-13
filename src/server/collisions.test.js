@@ -1,4 +1,4 @@
-const applyCollisions = require('./collisions');
+const { applyBullets } = require('./collisions');
 const Constants = require('../shared/constants');
 const Player = require('./player');
 const Bullet = require('./bullet');
@@ -15,7 +15,7 @@ describe('applyCollisions', () => {
       new Bullet('2', 1000 + distanceFromPlayer, 40, 0),
     ];
 
-    const result = applyCollisions(players, bullets);
+    const result = applyBullets(players, bullets);
     expect(result).toHaveLength(0);
   });
 
@@ -24,7 +24,7 @@ describe('applyCollisions', () => {
     const player = new Player(playerId, 'guest', 40, 40);
     const bullet = new Bullet(playerId, 40, 40, 0);
 
-    const result = applyCollisions([player], [bullet]);
+    const result = applyBullets([player], [bullet]);
     expect(result).toHaveLength(0);
   });
 
@@ -34,9 +34,12 @@ describe('applyCollisions', () => {
 
     jest.spyOn(player, 'takeBulletDamage');
 
-    const result = applyCollisions([player], [bullet]);
+    const result = applyBullets([player], [bullet]);
     expect(result).toHaveLength(1);
-    expect(result).toContain(bullet);
+    expect(result).toContainEqual({
+      bullet,
+      hitId:player.id
+    });
     expect(player.takeBulletDamage).toHaveBeenCalledTimes(1);
   });
 });

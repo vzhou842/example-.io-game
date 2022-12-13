@@ -2,17 +2,10 @@ const Player = require('./player');
 const Bullet = require('./bullet');
 const Constants = require('../shared/constants');
 
+const userObj = {name:'lumen',tokenId:738};
+
 describe('Player', () => {
   describe('update', () => {
-    it('should gain score each second', () => {
-      const player = new Player('123', 'guest');
-      const initialScore = player.score;
-
-      player.update(1);
-
-      expect(player.score).toBeGreaterThan(initialScore);
-    });
-
     it('should fire bullet on update', () => {
       const player = new Player('123', 'guest');
 
@@ -21,7 +14,7 @@ describe('Player', () => {
     });
 
     it('should not fire bullet during cooldown', () => {
-      const player = new Player('123', 'guest');
+      const player = new Player('123', userObj);
 
       player.update(Constants.PLAYER_FIRE_COOLDOWN / 3);
 
@@ -30,7 +23,7 @@ describe('Player', () => {
   });
   describe('takeBulletDamage', () => {
     it('should take damage when hit', () => {
-      const player = new Player('123', 'guest');
+      const player = new Player('123', userObj);
 
       const initialHp = player.hp;
 
@@ -42,7 +35,7 @@ describe('Player', () => {
 
   describe('onDealtDamage', () => {
     it('should increment score when dealing damage', () => {
-      const player = new Player('123', 'guest');
+      const player = new Player('123', userObj);
 
       const initialScore = player.score;
 
@@ -54,7 +47,7 @@ describe('Player', () => {
 
   describe('serializeForUpdate', () => {
     it('include hp and direction in serialization', () => {
-      const player = new Player('123', 'guest');
+      const player = new Player('123', userObj);
 
       expect(player.serializeForUpdate())
         .toEqual(expect.objectContaining({

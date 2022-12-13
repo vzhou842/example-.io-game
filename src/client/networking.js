@@ -30,8 +30,10 @@ export const connect = onGameOver => (
   })
 );
 
-export const play = username => {
-  socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);
+export const play = user => {
+  localStorage.setItem('mfer_name',user.name);
+  localStorage.setItem('mfer_id',user.tokenId);
+  socket.emit(Constants.MSG_TYPES.JOIN_GAME, user);
 };
 
 export const updateDirection = throttle(20, dir => {
