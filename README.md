@@ -1,6 +1,6 @@
 <h1 align="center">
     <img alt="An Example .io Game" title="An Example .io Game" src="https://github.com/vzhou842/example-.io-game/blob/master/public/assets/icon.svg" width="140"> <br />
-    An Example .io Game
+    mfer blast
 </h1>
 <h4 align="center">
   <a href="https://example-io-game.victorzhou.com">https://example-io-game.victorzhou.com</a>
@@ -12,7 +12,7 @@
   </a>
 </p>
 
-An example multiplayer (.io) web game. Read the walkthrough: [**How to Build a Multiplayer (.io) Web Game**](https://victorzhou.com/blog/build-an-io-game-part-1/).
+This is a fork of a multiplayer (.io) web game. Read the walkthrough: [**How to Build a Multiplayer (.io) Web Game**](https://victorzhou.com/blog/build-an-io-game-part-1/).
 
 Built with [Node.js](https://nodejs.org/), [socket.io](https://socket.io/), and [HTML5 Canvas](https://www.w3schools.com/html/html5_canvas.asp).
 
@@ -44,4 +44,10 @@ To run the tests for this this project, simply
 ```bash
 $ npm install
 $ npm test
+```
+
+## pm2
+
+```
+$ pm2 start npm --name "mfer blast" -- start
 ```

@@ -15,12 +15,10 @@ hr {
 
 button {
   font-size: 18px;
-  outline: none;
-  border: none;
   color: black;
   background-color: transparent;
   padding: 5px 20px;
-  border-radius: 3px;
+  border-radius: 5px;
   transition: background-color 0.2s ease;
 }
 
@@ -61,16 +59,16 @@ button:focus {
 
 #play-menu input {
   font-size: 18px;
-  outline: none;
+  outline: black;
   border: none;
-  border-bottom: 1px solid black;
+  border: 1px solid black;
   margin-bottom: 5px;
   padding: 3px;
   text-align: center;
 }
 
 #play-menu input:hover {
-  outline: none;
+  border: 1px solid grey;
 }
 
 #leaderboard {

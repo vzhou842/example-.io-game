@@ -3,9 +3,10 @@ const Bullet = require('./bullet');
 const Constants = require('../shared/constants');
 
 class Player extends ObjectClass {
-  constructor(id, username, x, y) {
+  constructor(id, user, x, y) {
     super(id, x, y, Math.random() * 2 * Math.PI, Constants.PLAYER_SPEED);
-    this.username = username;
+    this.username = user.name;
+    this.tokenId = user.tokenId;
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireCooldown = 0;
     this.score = 0;
@@ -15,12 +16,9 @@ class Player extends ObjectClass {
   update(dt) {
     super.update(dt);
 
-    // Update score
-    this.score += dt * Constants.SCORE_PER_SECOND;
-
     // Make sure the player stays in bounds
-    this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
-    this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
+    this.x = Math.max(Constants.PLAYER_RADIUS, Math.min(Constants.MAP_SIZE-Constants.PLAYER_RADIUS, this.x));
+    this.y = Math.max(Constants.PLAYER_RADIUS, Math.min(Constants.MAP_SIZE-Constants.PLAYER_RADIUS, this.y));
 
     // Fire a bullet, if needed
     this.fireCooldown -= dt;
@@ -37,7 +35,14 @@ class Player extends ObjectClass {
   }
 
   onDealtDamage() {
-    this.score += Constants.SCORE_BULLET_HIT;
+    this.score += 1;
+  }
+
+  useAidKit(aidkit) {
+    this.hp += aidkit.hp;
+    if (this.hp > Constants.PLAYER_MAX_HP) {
+      this.hp = Constants.PLAYER_MAX_HP;
+    }
   }
 
   serializeForUpdate() {
@@ -45,6 +50,7 @@ class Player extends ObjectClass {
       ...(super.serializeForUpdate()),
       direction: this.direction,
       hp: this.hp,
+      tokenId:this.tokenId
     };
   }
 }
