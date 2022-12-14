@@ -11,6 +11,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'src/client/assets/[name].[ext]'
   },
   module: {
     rules: [
@@ -33,6 +34,10 @@ module.exports = {
           'css-loader',
         ],
       },
+      {
+       test: /\.(png|jpg|gif|svg|eot|ttf|woff)$/,
+       type: 'asset/resource'
+      }
     ],
   },
   plugins: [

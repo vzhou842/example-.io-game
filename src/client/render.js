@@ -161,7 +161,7 @@ function renderPlayer(me, player) {
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
 
-  context.fillStyle = bgcolors[me.color] || 'white';
+  context.fillStyle = bgcolors[bullet.color] || 'white';
 
   context.beginPath();
   context.arc(
