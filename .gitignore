@@ -1,5 +1,7 @@
 # Based on https://github.com/github/gitignore/blob/master/Node.gitignore
 
+public/assets/mfers/
+
 # Logs
 logs
 *.log

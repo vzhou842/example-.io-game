@@ -8,6 +8,17 @@ const Constants = require('../shared/constants');
 
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
 
+const bgcolors = {
+  blue:"#7dd0ff",
+  graveyard:"#61824d",
+  green:"#c5fc82",
+  orange:"#ffba7a",
+  red:"#ff7c7c",
+  space:"#aae9f7",
+  tree:"#816a56",
+  yellow:"#ffe375"
+}
+
 // Get the canvas graphics context
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
@@ -67,15 +78,15 @@ function renderBackground(x, y) {
     backgroundY,
     MAP_SIZE / 2,
   );
-  backgroundGradient.addColorStop(0, 'black');
-  backgroundGradient.addColorStop(1, '#F3B87A');
+  backgroundGradient.addColorStop(0, '#ea3e33'); // center
+  backgroundGradient.addColorStop(1, '#6189f7');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
-  const { x, y, tokenId, direction } = player;
+  const { x, y, tokenId, color, direction } = player;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
@@ -111,21 +122,21 @@ function renderPlayer(me, player) {
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
     PLAYER_RADIUS * 2,
-    2,
+    4,
   );
-  context.fillStyle = 'red';
+  context.fillStyle = 'black';
   context.fillRect(
     canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP,
     canvasY + PLAYER_RADIUS + 8,
     PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
-    2,
+    4,
   );
 }
 
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
 
-  context.fillStyle = '#FFF';
+  context.fillStyle = bgcolors[me.color] || 'white';
 
   context.beginPath();
   context.arc(
