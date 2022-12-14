@@ -1,5 +1,6 @@
 const ASSET_NAMES = [
-  'aid.svg'
+  'aid.svg',
+  'default.png'
 ];
 
 const assets = {};
@@ -28,7 +29,7 @@ const mfers = {};
 export const getmfer = (id) => {
   if (typeof mfers[id] === 'undefined') {
     mfers[id] = {
-      loaded: false,
+      loaded: false
     }
 
     const asset = new Image();
@@ -38,6 +39,10 @@ export const getmfer = (id) => {
       mfers[id]['loaded'] = true;
     };
     asset.src = `/assets/mfers/${id}.png`;
+    asset.onerror = () => {
+      mfers[id].src = assets['default.png'];
+      mfers[id]['loaded'] = true;
+    }
   }
 
   return mfers[id];
