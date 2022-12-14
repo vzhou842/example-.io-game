@@ -19,6 +19,8 @@ const bgcolors = {
   yellow:"#ffe375"
 }
 
+let dim = {};
+
 // Get the canvas graphics context
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
@@ -28,8 +30,27 @@ function setCanvasDimensions() {
   // On small screens (e.g. phones), we want to "zoom out" so players can still see at least
   // 800 in-game units of width.
   const scaleRatio = Math.max(1, 800 / window.innerWidth);
-  canvas.width = scaleRatio * window.innerWidth;
-  canvas.height = scaleRatio * window.innerHeight;
+  // canvas.width = scaleRatio * window.innerWidth;
+  // canvas.height = scaleRatio * window.innerHeight;
+
+  dim = {
+    w:window.innerWidth,
+    h:window.innerHeight,
+    ratio:window.devicePixelRatio || 1
+  }
+
+  dim['sw'] = dim['w']*scaleRatio;
+  dim['sh'] = dim['h']*scaleRatio;
+
+  if (dim['ratio'] > 2) {dim['ratio'] = 2;}
+
+  canvas.width = Math.floor(dim['sw'] * dim['ratio']);
+  canvas.height = Math.floor(dim['sh'] * dim['ratio']);
+
+  canvas.style.width = `${dim.w}px`;
+  canvas.style.height = `${dim.h}px`;
+
+  context.scale(dim['ratio'], dim['ratio']);
 }
 
 window.addEventListener('resize', debounce(40, setCanvasDimensions));
@@ -46,7 +67,7 @@ function render() {
     // Draw boundaries
     context.strokeStyle = 'black';
     context.lineWidth = 5;
-    context.strokeRect(canvas.width / 2 - me.x, canvas.height / 2 - me.y, MAP_SIZE, MAP_SIZE);
+    context.strokeRect(0.5*dim.sw - me.x, 0.5*dim.sh - me.y, MAP_SIZE, MAP_SIZE);
 
     // Draw all bullets
     bullets.forEach(renderBullet.bind(null, me));
@@ -87,8 +108,12 @@ function renderBackground(x, y) {
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
   const { x, y, tokenId, color, direction } = player;
-  const canvasX = canvas.width / 2 + x - me.x;
-  const canvasY = canvas.height / 2 + y - me.y;
+
+  // const canvasX = canvas.width / 2 + x - me.x;
+  // const canvasY = canvas.height / 2 + y - me.y;
+
+  const canvasX = 0.5*dim.sw + x - me.x;
+  const canvasY = 0.5*dim.sh + y - me.y;
 
   // Draw ship
   context.save();
@@ -140,8 +165,8 @@ function renderBullet(me, bullet) {
 
   context.beginPath();
   context.arc(
-    canvas.width / 2 + x - me.x,
-    canvas.height / 2 + y - me.y,
+    0.5*dim.sw + x - me.x,
+    0.5*dim.sh + y - me.y,
     BULLET_RADIUS, 
     0, 2 * Math.PI
   );
@@ -164,8 +189,8 @@ function renderAidKit(me,aidkit) {
   
   context.drawImage(
     getAsset('aid.svg'),
-    canvas.width / 2 + x - me.x,
-    canvas.height / 2 + y - me.y,
+    0.5*dim.sw + x - me.x,
+    0.5*dim.sh + y - me.y,
     Constants.AID_KIT_RADIUS,
     Constants.AID_KIT_RADIUS
   );
