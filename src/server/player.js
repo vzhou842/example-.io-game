@@ -1,7 +1,13 @@
+const fs = require('fs');
 const ObjectClass = require('./object');
 const Bullet = require('./bullet');
 const Constants = require('../shared/constants');
 
+const rawData = fs.readFileSync(require.resolve("./mfer-traits.json"));
+const mferTraits = JSON.parse(rawData.toString());
+
+// const trait = mferTraits[140]['attributes'].find(t => t.trait_type === 'background')?.value;
+// console.log(trait)
 class Player extends ObjectClass {
   constructor(id, user, x, y) {
     super(id, x, y, Math.random() * 2 * Math.PI, Constants.PLAYER_SPEED);
@@ -10,6 +16,7 @@ class Player extends ObjectClass {
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireCooldown = 0;
     this.score = 0;
+    this.color = mferTraits[this.tokenId]['attributes'].find(t => t.trait_type === 'background')?.value || 'white';
   }
 
   // Returns a newly created bullet, or null.
@@ -50,7 +57,8 @@ class Player extends ObjectClass {
       ...(super.serializeForUpdate()),
       direction: this.direction,
       hp: this.hp,
-      tokenId:this.tokenId
+      tokenId:this.tokenId,
+      color:this.color
     };
   }
 }
