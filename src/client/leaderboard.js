@@ -1,5 +1,4 @@
 import escape from 'lodash/escape';
-import { getmfer } from './assets';
 const leaderboard = document.getElementById('leaderboard');
 const rows = document.querySelectorAll('#leaderboard table tr');
 

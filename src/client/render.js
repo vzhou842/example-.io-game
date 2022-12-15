@@ -63,11 +63,17 @@ function render() {
   if (me) {
     // Draw background
     renderBackground(me.x, me.y);
-
+    
     // Draw boundaries
     context.strokeStyle = 'black';
     context.lineWidth = 5;
     context.strokeRect(0.5*dim.sw - me.x, 0.5*dim.sh - me.y, MAP_SIZE, MAP_SIZE);
+
+   if (me.color === 'dead') {
+      context.fillStyle = 'white';
+      context.font = "30px sans-serif";
+      context.fillText(`blasted by ${me.tokenId}`, 10, 50);
+    }
 
     // Draw all bullets
     bullets.forEach(renderBullet.bind(null, me));
@@ -78,10 +84,6 @@ function render() {
 
     // Draw first aid kits
     aidkits.forEach(renderAidKit.bind(null, me));
-    // aidkits.forEach(aidkit => {
-    //   //console.log(aidkit)
-    //   renderAid(aidkit)
-    // });
   }
 
   // Rerun this render function on the next frame
@@ -108,9 +110,8 @@ function renderBackground(x, y) {
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
   const { x, y, tokenId, color, direction } = player;
-
-  // const canvasX = canvas.width / 2 + x - me.x;
-  // const canvasY = canvas.height / 2 + y - me.y;
+  
+  if (color === 'dead') return;
 
   const canvasX = 0.5*dim.sw + x - me.x;
   const canvasY = 0.5*dim.sh + y - me.y;
