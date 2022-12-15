@@ -3,15 +3,16 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
     game: './src/client/index.js',
   },
   output: {
-    filename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: 'src/client/assets/[name].[ext]'
+     filename: 'bundle.js',
+     path: path.resolve(__dirname, 'blaster'),
+     assetModuleFilename: 'assets/[name].[hash][ext]'
   },
   module: {
     rules: [
@@ -41,12 +42,13 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
+      filename: '[name].[hash].css',
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'src/client/html/index.html',
+      template: 'src/client/index.html',
     }),
   ],
 };
