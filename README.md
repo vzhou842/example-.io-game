@@ -1,22 +1,14 @@
 <h1 align="center">
-    <img alt="An Example .io Game" title="An Example .io Game" src="https://github.com/vzhou842/example-.io-game/blob/master/public/assets/icon.svg" width="140"> <br />
+    <img alt="MFER Blaster (banner)" title="MFER Blaster" src="https://outerlumen.com/mfer/mfer-blaster-logo.png" width="600"> <br />
     mfer blast
 </h1>
 <h4 align="center">
-  <a href="https://example-io-game.victorzhou.com">https://example-io-game.victorzhou.com</a>
+  <a href="https://outerlumen.com/mfer/blaster/">https://outerlumen.com/mfer/blaster//a>
 </h4>
 
-<p align="center">
-  <a href="https://travis-ci.com/vzhou842/example-.io-game">
-    <img src="https://travis-ci.com/vzhou842/example-.io-game.svg?branch=master" alt="Build Status"></img>
-  </a>
-</p>
-
-This is a fork of a multiplayer (.io) web game. Read the walkthrough: [**How to Build a Multiplayer (.io) Web Game**](https://victorzhou.com/blog/build-an-io-game-part-1/).
+This is a fork of a multiplayer (.io) web game. Read the original walkthrough: [**How to Build a Multiplayer (.io) Web Game**](https://victorzhou.com/blog/build-an-io-game-part-1/). And THANK YOU to mfer Victor Zhou for the awesome tutorial.
 
 Built with [Node.js](https://nodejs.org/), [socket.io](https://socket.io/), and [HTML5 Canvas](https://www.w3schools.com/html/html5_canvas.asp).
-
-To see this code with [Flow](https://flow.org/) typing, visit the [flow branch](https://github.com/vzhou842/example-.io-game/tree/flow).
 
 ## Development
 
@@ -29,12 +21,24 @@ $ npm run develop
 
 on your local machine.
 
-To run the project in a production setting, simply
+
+## Production
+
+To run the project in a production setting:
 
 ```bash
 $ npm install
 $ npm run build
 $ npm start
+```
+
+Or with nginx and pm2:
+
+```bash
+$ npm install
+$ npm run build
+$ mv mfer-blaster/blaster /var/www/outerlumen.com/html/mfer/
+$ pm2 start npm --name "mfer blast" -- start
 ```
 
 ## Tests
