@@ -3,16 +3,16 @@
 <head>
   <title>mfer blaster</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="shortcut icon" href="/assets/icon72.png">
+  <link rel="shortcut icon" href="<%= require('./assets/icon72.png') %>">
   <meta property="description" content="blast fellow mfers.">
   <meta property="og:title" content="mfer blaster">
   <meta property="og:description" content="blast fellow mfers.">
-  <meta property="og:image" content="/assets/icon310.png">
+  <meta property="og:image" content="<%= require('./assets/icon310.png') %>">
 </head>
 <body>
   <canvas id="game-canvas"></canvas>
   <div id="play-menu" class="hidden">
-    <img src="<%= require('./mfer-blaster-logo.png') %>" width=250 height=104 alt="MFER BLAST" />
+    <img src="<%= require('./assets/mfer-blaster-logo.png') %>" width=250 height=104 alt="MFER BLAST" />
     <hr/>
     <div class="row">
         <input type="text" id="name-input" placeholder="name" />
@@ -34,7 +34,7 @@
   </div>
   <div id="leaderboard" class="hidden">
     
-      <img src="<%= require('./mfer-blaster-logo.png') %>" alt="MFER BLAST" />
+      <img src="<%= require('./assets/mfer-blaster-logo.png') %>" alt="MFER BLAST" />
     
     <hr />
     <table>

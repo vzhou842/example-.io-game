@@ -1,32 +1,28 @@
-const ASSET_NAMES = [
-  'aid.svg',
-  'default.png'
-];
+import aidkit from './assets/aid.svg';
+import mfer from './assets/default.png';
 
-const assets = {};
+const assets = {
+  aidkit: { src:aidkit, loaded:false},
+  mfer:{ src:mfer, loaded:false}
+}
 
-const downloadPromise = Promise.all(ASSET_NAMES.map(downloadAsset));
-
-function downloadAsset(assetName) {
-  return new Promise(resolve => {
-    const asset = new Image();
-    asset.onload = () => {
-      console.log(`Downloaded ${assetName}`);
-      assets[assetName] = asset;
-      resolve();
-    };
-    asset.src = `/assets/${assetName}`;
+export function downloadAssets() {
+  Object.keys(assets).forEach(key => {
+    const image = new Image();
+    image.onload = () => {
+      assets[key]['src'] = image;
+      assets[key]['loaded'] = true;
+    }
+    image.src = assets[key]['src'];
   });
 }
 
-export const downloadAssets = () => downloadPromise;
-
 export const getAsset = assetName => assets[assetName];
-
 
 const mfers = {};
 
 export const getmfer = (id) => {
+
   if (typeof mfers[id] === 'undefined') {
     mfers[id] = {
       loaded: false
@@ -34,16 +30,13 @@ export const getmfer = (id) => {
 
     const asset = new Image();
     asset.onload = () => {
-      console.log(`Downloaded ${id}`);
       mfers[id]['src'] = asset;
       mfers[id]['loaded'] = true;
     };
-    asset.src = `/assets/mfers/${id}.png`;
+    asset.src = `https://outerlumen.com/mfer/mfers/${id}.png`;
     asset.onerror = () => {
-      mfers[id].src = assets['default.png'];
-      mfers[id]['loaded'] = true;
+      mfers[id] = assets['mfer']; // default mfer
     }
   }
-
   return mfers[id];
 }

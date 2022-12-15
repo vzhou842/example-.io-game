@@ -130,6 +130,7 @@ function renderPlayer(me, player) {
   context.clip();
     
   const img = getmfer(tokenId);
+
   if (img['loaded']) {
     context.drawImage(
       img['src'],
@@ -174,27 +175,23 @@ function renderBullet(me, bullet) {
   context.closePath();
   context.stroke();
   context.fill();
-
-  // context.drawImage(
-  //   getAsset('bullet.svg'),
-  //   canvas.width / 2 + x - me.x - BULLET_RADIUS,
-  //   canvas.height / 2 + y - me.y - BULLET_RADIUS,
-  //   BULLET_RADIUS*2,
-  //   BULLET_RADIUS*2,
-  // );
 }
 
 function renderAidKit(me,aidkit) {
   
   const { x, y, hp } = aidkit;
   
-  context.drawImage(
-    getAsset('aid.svg'),
-    0.5*dim.sw + x - me.x,
-    0.5*dim.sh + y - me.y,
-    Constants.AID_KIT_RADIUS,
-    Constants.AID_KIT_RADIUS
-  );
+  const img = getAsset('aidkit');
+
+  if (img['loaded']) {
+    context.drawImage(
+      img['src'],
+      0.5*dim.sw + x - me.x,
+      0.5*dim.sh + y - me.y,
+      Constants.AID_KIT_RADIUS,
+      Constants.AID_KIT_RADIUS
+    );
+  }
 }
 
 function renderMainMenu() {
