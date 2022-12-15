@@ -8,7 +8,7 @@ html, body {
 
 hr {
   border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.9);
   margin: 1rem 0;
   width: 100%;
 }
@@ -28,6 +28,12 @@ button:hover {
 
 button:focus {
   outline: none;
+}
+
+.holder {
+  margin:10px 0px 5px 0px;
+  width:100%;
+  font-size:80%;
 }
 
 .hidden {
@@ -110,6 +116,11 @@ button:focus {
   text-align: center;
 }
 
+#leaderboard img {
+  width: 200px;
+  height: 83px;
+}
+
 @media screen and (max-width: 640px) {
   h1 {
     font-size: 2rem;
@@ -117,6 +128,11 @@ button:focus {
 
   h2 {
     font-size: 1.75rem;
+  }
+
+  #leaderboard img {
+    width: 100px;
+    height: 42px;
   }
 
   #play-menu {

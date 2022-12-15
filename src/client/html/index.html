@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>mfer game</title>
+  <title>mfer blaster</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" href="/assets/icon64.png">
   <meta property="description" content="mfer game.">
@@ -12,24 +12,30 @@
 <body>
   <canvas id="game-canvas"></canvas>
   <div id="play-menu" class="hidden">
-    <h1>MFER BLAST</h1>
-    <p>
-      always has been
-    </p>
-    <hr />
+    <img src="<%= require('./mfer-blaster-logo.png') %>" width=250 height=104 alt="MFER BLAST" />
+    <hr/>
     <div class="row">
         <input type="text" id="name-input" placeholder="name" />
     </div>
     <div class="row">
         <input type="text" id="mfer-input" placeholder="mfer id" />
     </div>
-    <hr />
     <div class="row">
         <button id="play-button">PLAY</button>
     </div>
-    
+    <hr />
+    <div class="holder">
+      <p>Created with <strong>♡</strong> by:</p>
+      <p><strong><a href="https://twitter.com/outerlumen">@outerlumen</a></strong></p>
+      <p><strong><a href="https://twitter.com/dividebyzeroeth">@dividebyzeroeth</a></strong></p><BR>
+      <p>Donations: <strong><a href="https://etherscan.io/address/0xda8cb96ef0da5f2828324768a1571ce8aa521d91">splootyloo.eth</a></strong></p>
+    </div>
   </div>
   <div id="leaderboard" class="hidden">
+    
+      <img src="<%= require('./mfer-blaster-logo.png') %>" alt="MFER BLAST" />
+    
+    <hr />
     <table>
       <tr>
         <th>Name</th>
@@ -41,6 +47,7 @@
       <tr><td></td><td></td></tr>
       <tr><td></td><td></td></tr>
     </table>
+   
   </div>
   <div id="disconnect-modal" class="hidden">
     <div>

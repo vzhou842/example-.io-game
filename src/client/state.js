@@ -20,7 +20,6 @@ export function processGameUpdate(update) {
     firstServerTimestamp = update.t;
     gameStart = Date.now();
   }
-
   gameUpdates.push(update);
 
   updateLeaderboard(update.leaderboard);
