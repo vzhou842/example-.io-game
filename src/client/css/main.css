@@ -116,6 +116,11 @@ button:focus {
   text-align: center;
 }
 
+#leaderboard img {
+  width: 200px;
+  height: 83px;
+}
+
 @media screen and (max-width: 640px) {
   h1 {
     font-size: 2rem;
@@ -123,6 +128,11 @@ button:focus {
 
   h2 {
     font-size: 1.75rem;
+  }
+
+  #leaderboard img {
+    width: 100px;
+    height: 42px;
   }
 
   #play-menu {

@@ -89,8 +89,8 @@ function render() {
 }
 
 function renderBackground(x, y) {
-  const backgroundX = MAP_SIZE / 2 - x + canvas.width / 2;
-  const backgroundY = MAP_SIZE / 2 - y + canvas.height / 2;
+  const backgroundX = MAP_SIZE / 2 - x + 0.5*dim.sw;
+  const backgroundY = MAP_SIZE / 2 - y + 0.5*dim.sh;
   const backgroundGradient = context.createRadialGradient(
     backgroundX,
     backgroundY,
