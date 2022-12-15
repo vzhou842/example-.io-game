@@ -6,8 +6,6 @@ const Constants = require('../shared/constants');
 const rawData = fs.readFileSync(require.resolve("./mfer-traits.json"));
 const mferTraits = JSON.parse(rawData.toString());
 
-// const trait = mferTraits[140]['attributes'].find(t => t.trait_type === 'background')?.value;
-// console.log(trait)
 class Player extends ObjectClass {
   constructor(id, user, x, y) {
     super(id, x, y, Math.random() * 2 * Math.PI, Constants.PLAYER_SPEED);
@@ -21,6 +19,8 @@ class Player extends ObjectClass {
 
   // Returns a newly created bullet, or null.
   update(dt) {
+    if (this.color === "dead") return;
+
     super.update(dt);
 
     // Make sure the player stays in bounds

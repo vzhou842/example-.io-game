@@ -9,6 +9,9 @@ function applyBullets(players, bullets) {
     for (let j = 0; j < players.length; j++) {
       const bullet = bullets[i];
       const player = players[j];
+
+      if (player.color === "dead") {continue;}
+
       if (
         bullet.parentID !== player.id &&
         player.distanceTo(bullet) <= Constants.PLAYER_RADIUS + Constants.BULLET_RADIUS
@@ -32,6 +35,9 @@ function applyAidKits(players, aidkits) {
     for (let j = 0; j < players.length; j++) {
       const aidkit = aidkits[i];
       const player = players[j];
+
+      if (player.color === "dead") {continue;}
+      
       if (
         player.distanceTo(aidkit) <= Constants.PLAYER_RADIUS + Constants.AID_KIT_RADIUS
       ) {

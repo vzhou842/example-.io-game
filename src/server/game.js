@@ -19,9 +19,8 @@ class Game {
   addPlayer(socket, user) {
     this.sockets[socket.id] = socket;
 
-    // Generate a position to start this player at.
-    const x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
-    const y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
+    const x = Math.random()*(Constants.MAP_SIZE-Constants.AID_KIT_RADIUS);
+    const y = Math.random()*(Constants.MAP_SIZE-Constants.AID_KIT_RADIUS);
     this.players[socket.id] = new Player(socket.id, user, x, y);
   }
 
@@ -63,24 +62,35 @@ class Game {
 
     // Apply collisions, give players score for hitting bullets
     const destroyedBullets = applyBullets(Object.values(this.players), this.bullets);
-    // destroyedBullets.forEach(b => {
-    //   if (this.players[b.parentID]) {
-    //     this.players[b.parentID].onDealtDamage();
-    //   }
-    // });
     this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet.bullet));
 
-    // Check if any players are dead
+    // Check if any mfers are freshly dead, and sweep floor
     Object.keys(this.sockets).forEach(playerID => {
       const socket = this.sockets[playerID];
       const player = this.players[playerID];
+
       if (player.hp <= 0) {
-        const killer_bullet = destroyedBullets.find(d => d.hitId === player.id)
         
-        this.players[killer_bullet.bullet.parentID]?.onDealtDamage();
-        
-        socket.emit(Constants.MSG_TYPES.GAME_OVER);
-        this.removePlayer(socket);
+        if (player.color === "dead") {
+          // game over - removed from game
+          socket.emit(Constants.MSG_TYPES.GAME_OVER, );
+          this.removePlayer(socket);
+        }
+        else {
+          // mfer is now dead!
+          const killer_bullet = destroyedBullets.find(d => d.hitId === player.id)
+          this.players[killer_bullet.bullet.parentID]?.onDealtDamage();
+
+          // mfer gets killer's username to display back to them on game over
+          player.tokenId = this.players[killer_bullet.bullet.parentID]?.username;
+          player.hp = Constants.AFTER_DEATH_COUNTDOWN;     // hp is punked for after-death sequence countdown
+          player.color = "dead";
+        }
+      }
+
+      // countdown back to zero before removal
+      if (player.color === "dead") {
+        player.hp -= 1;
       }
     });
 
@@ -103,7 +113,7 @@ class Game {
       // const x = 0.5*Constants.MAP_SIZE + Math.random()*1000;
       // const y = 0.5*Constants.MAP_SIZE + Math.random()*1000;
 
-      const hp = parseInt(Constants.PLAYER_MAX_HP*(1 - 0.75*Math.random()));
+      const hp = Constants.PLAYER_MAX_HP;//parseInt(Constants.PLAYER_MAX_HP*(1 - 0.75*Math.random()));
       const t0 = now + 2000*(Math.random() + 5*Math.random());
       this.aidkits.push(new AidKit(x, y, hp, t0));
     }
@@ -136,14 +146,14 @@ class Game {
 
   createUpdate(player, leaderboard) {
     const nearbyPlayers = Object.values(this.players).filter(
-      p => p !== player && p.distanceTo(player) <= Constants.MAP_SIZE / 2,
+      p => p !== player && p.distanceTo(player) <= 0.5*Constants.MAP_SIZE,
     );
     const nearbyBullets = this.bullets.filter(
-      b => b.distanceTo(player) <= Constants.MAP_SIZE / 2,
+      b => b.distanceTo(player) <= 0.5*Constants.MAP_SIZE,
     );
     const existingAidKits = this.aidkits.filter(b => b.exist);
     const nearbyAidKits = existingAidKits.filter(
-      b => b.distanceTo(player) <= Constants.MAP_SIZE / 2,
+      b => b.distanceTo(player) <= 0.5*Constants.MAP_SIZE,
     );
 
     return {

@@ -87,13 +87,29 @@ button:focus {
 }
 
 #leaderboard th {
-  text-align: center;
   padding: 2px 5px;
 }
 
+table {
+  width: 100%;
+}
+
 #leaderboard td {
-  text-align: center;
   padding: 2px 5px;
+}
+
+#leaderboard th:nth-child(2) {
+  text-align: center;
+}
+#leaderboard th:nth-child(1) {
+  text-align: left;
+}
+
+#leaderboard td:nth-child(2) {
+  text-align: center;
+}
+#leaderboard td:nth-child(1) {
+  text-align: left;
 }
 
 #disconnect-modal {
