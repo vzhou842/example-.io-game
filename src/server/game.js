@@ -58,6 +58,11 @@ class Game {
     // Debug logging
     if (Math.random() < 1 / 108000) {
       console.log('update() invoked', now);
+      console.log(
+        `${Object.keys(this.sockets).length} sockets, ${
+          Object.keys(this.players).length
+        } players, ${this.bullets.length} bullets`
+      );
     }
 
     // Update each bullet
