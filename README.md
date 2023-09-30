@@ -1,13 +1,3 @@
-### Table of Contents
-
-- [Features](#features)
-- [Installation](#installation)
-- [Tests](#tests)
-- [Contribute](#contribute)
-- [License](#license)
-
-
-
 <h1 align="center">
     <img alt="An Example .io Game" title="An Example .io Game" src="https://github.com/vzhou842/example-.io-game/blob/master/public/assets/icon.svg" width="140"> <br />
     An Example .io Game
@@ -27,6 +17,15 @@ An example multiplayer (.io) web game. Read the walkthrough: [**How to Build a M
 Built with [Node.js](https://nodejs.org/), [socket.io](https://socket.io/), and [HTML5 Canvas](https://www.w3schools.com/html/html5_canvas.asp).
 
 To see this code with [Flow](https://flow.org/) typing, visit the [flow branch](https://github.com/vzhou842/example-.io-game/tree/flow).
+
+### Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Tests](#tests)
+- [Contribute](#contribute)
+- [License](#license)
+
 
 ## Features
 
