@@ -20,7 +20,7 @@
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1",
     "throttle-debounce": "^2.3.0",
-    "webpack": "^4.43.0",
+    "webpack": "^4.47.0",
     "webpack-dev-middleware": "^3.7.3"
   },
   "devDependencies": {
@@ -36,6 +36,7 @@
     "eslint-plugin-jest": "^23.7.0",
     "jest": "^25.1.0",
     "mini-css-extract-plugin": "^0.6.0",
+    "nodemon": "^3.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.8",
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
