@@ -63,6 +63,14 @@ function renderBackground(x, y) {
   backgroundGradient.addColorStop(1, 'gray');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
+
+  context.drawImage(
+    getAsset('yard.svg'),
+    canvas.width / 2 - x,
+    canvas.height / 2 - y,
+    MAP_SIZE,
+    MAP_SIZE,
+  );
 }
 
 // Renders a ship at the given coordinates
@@ -76,7 +84,7 @@ function renderPlayer(me, player) {
   context.translate(canvasX, canvasY);
   context.rotate(direction);
   context.drawImage(
-    getAsset('ship.svg'),
+    getAsset('chtor.svg'),
     -PLAYER_RADIUS,
     -PLAYER_RADIUS,
     PLAYER_RADIUS * 2,
@@ -104,7 +112,7 @@ function renderPlayer(me, player) {
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
   context.drawImage(
-    getAsset('bullet.svg'),
+    getAsset('fire.svg'),
     canvas.width / 2 + x - me.x - BULLET_RADIUS,
     canvas.height / 2 + y - me.y - BULLET_RADIUS,
     BULLET_RADIUS * 2,
