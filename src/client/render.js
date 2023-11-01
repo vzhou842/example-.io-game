@@ -61,10 +61,11 @@ function renderBackground(x, y) {
     MAP_SIZE / 10,
     backgroundX,
     backgroundY,
-    MAP_SIZE / 2,
+    MAP_SIZE / 1.2,
   );
-  backgroundGradient.addColorStop(0, 'purple');
-  backgroundGradient.addColorStop(1, 'blue');
+  backgroundGradient.addColorStop(0, 'blue');
+  backgroundGradient.addColorStop(0.9, "purple");
+  backgroundGradient.addColorStop(1, 'black');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -97,7 +98,7 @@ function renderPlayer(me, player) {
   context.restore();
 
   // Draw health bar
-  context.fillStyle = 'white';
+  context.fillStyle = 'green';
   context.fillRect(
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
@@ -111,6 +112,15 @@ function renderPlayer(me, player) {
     PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
     2,
   );
+
+  // Draw nickname
+  context.fillStyle = "white";
+  context.font = "14px Arial";
+  let username = player.username.split('NaN')[0];
+  if (username.length > 6) {
+    username = username.substring(0, 6).concat('...');
+  }
+  context.fillText(username, canvasX - PLAYER_RADIUS - username.length, canvasY + PLAYER_RADIUS + 24);
 }
 
 function renderBullet(me, bullet) {
@@ -127,7 +137,6 @@ function renderBullet(me, bullet) {
 function renderPath(me, path) {
   const { x, y } = path;
   context2.fillStyle = path.parentColor;
-  console.log(path);
   context2.fillRect(
     canvas.width / 2 + x - me.x,
     canvas.height / 2 + y - me.y,
