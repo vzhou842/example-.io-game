@@ -61,16 +61,16 @@ function renderBackground(x, y) {
     MAP_SIZE / 10,
     backgroundX,
     backgroundY,
-    MAP_SIZE / 1.2,
+    MAP_SIZE / 1.1,
   );
-  backgroundGradient.addColorStop(0, 'blue');
-  backgroundGradient.addColorStop(0.9, "purple");
+  backgroundGradient.addColorStop(0, 'skyblue');
+  backgroundGradient.addColorStop(0.95, "purple");
   backgroundGradient.addColorStop(1, 'black');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   context.drawImage(
-    getAsset('yard.svg'),
+    getAsset('yard2.svg'),
     canvas.width / 2 - x,
     canvas.height / 2 - y,
     MAP_SIZE,
