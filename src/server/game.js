@@ -2,6 +2,7 @@ const Constants = require('../shared/constants');
 const Player = require('./player');
 const Path = require('./path');
 const applyCollisions = require('./collisions');
+const colorHash = require('color-hash').default;
 
 class Game {
   constructor() {
@@ -46,7 +47,7 @@ class Game {
       if (bullet.update(dt)) {
         // Destroy this bullet
         bulletsToRemove.push(bullet);
-        this.paths.push(new Path(bullet.parentID, bullet.x, bullet.y, this.players[bullet.parentID].color));
+        this.paths.push(new Path(bullet.parentID, bullet.x, bullet.y, this.players[bullet.parentID]?.color || new colorHash(bullet.parentID)));
         if (this.paths.length >= 10000) {
           for (let i = 0; i < 100; ++i) {
             this.paths.shift();
