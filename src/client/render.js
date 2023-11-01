@@ -26,7 +26,7 @@ window.addEventListener('resize', debounce(40, setCanvasDimensions));
 let animationFrameRequestId;
 
 function render() {
-  const { me, others, bullets } = getCurrentState();
+  const { me, others, bullets, paths } = getCurrentState();
   if (me) {
     // Draw background
     renderBackground(me.x, me.y);
@@ -38,6 +38,9 @@ function render() {
 
     // Draw all bullets
     bullets.forEach(renderBullet.bind(null, me));
+
+    // Draw all paths
+    paths.forEach(renderPath.bind(null, me));
 
     // Draw all players
     renderPlayer(me, me);
@@ -118,6 +121,19 @@ function renderBullet(me, bullet) {
     BULLET_RADIUS * 2,
     BULLET_RADIUS * 2,
   );
+}
+
+function renderPath(me, path) {
+  const { x, y } = path;
+  context.fillRect(
+    canvas.width / 2 + x - me.x,
+    canvas.height / 2 + y - me.y,
+    30 * 2,
+    30 * 2,
+  )
+  // context.beginPath();
+  // context.arc(canvas.width / 2 + x - me.x, canvas.height / 2 + y - me.y, 25, 0, 2 * Math.PI);
+  // context.fill();
 }
 
 function renderMainMenu() {

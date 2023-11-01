@@ -1,5 +1,6 @@
 const Constants = require('../shared/constants');
 const Player = require('./player');
+const Path = require('./path');
 const applyCollisions = require('./collisions');
 
 class Game {
@@ -7,6 +8,7 @@ class Game {
     this.sockets = {};
     this.players = {};
     this.bullets = [];
+    this.paths = [];
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
@@ -44,6 +46,12 @@ class Game {
       if (bullet.update(dt)) {
         // Destroy this bullet
         bulletsToRemove.push(bullet);
+        this.paths.push(new Path(bullet.parentID, bullet.x, bullet.y, now));
+        if (this.paths.length >= 10000) {
+          for (let i = 0; i < 100; ++i) {
+            this.paths.shift();
+          }
+        }
       }
     });
     this.bullets = this.bullets.filter(bullet => !bulletsToRemove.includes(bullet));
@@ -104,12 +112,16 @@ class Game {
     const nearbyBullets = this.bullets.filter(
       b => b.distanceTo(player) <= Constants.MAP_SIZE / 2,
     );
+    const nearbyPaths = this.paths.filter(
+      p => p.distanceTo(player) <= Constants.MAP_SIZE / 2,
+    );
 
     return {
       t: Date.now(),
       me: player.serializeForUpdate(),
       others: nearbyPlayers.map(p => p.serializeForUpdate()),
       bullets: nearbyBullets.map(b => b.serializeForUpdate()),
+      paths: nearbyPaths.map(p => p.serializeForUpdate()),
       leaderboard,
     };
   }
