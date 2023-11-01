@@ -11,6 +11,7 @@ const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
 // Get the canvas graphics context
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
+const context2 = canvas.getContext('2d');
 setCanvasDimensions();
 
 function setCanvasDimensions() {
@@ -62,8 +63,8 @@ function renderBackground(x, y) {
     backgroundY,
     MAP_SIZE / 2,
   );
-  backgroundGradient.addColorStop(0, 'black');
-  backgroundGradient.addColorStop(1, 'gray');
+  backgroundGradient.addColorStop(0, 'purple');
+  backgroundGradient.addColorStop(1, 'blue');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -125,7 +126,9 @@ function renderBullet(me, bullet) {
 
 function renderPath(me, path) {
   const { x, y } = path;
-  context.fillRect(
+  context2.fillStyle = path.parentColor;
+  console.log(path);
+  context2.fillRect(
     canvas.width / 2 + x - me.x,
     canvas.height / 2 + y - me.y,
     30 * 2,
